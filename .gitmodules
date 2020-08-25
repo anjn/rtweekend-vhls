@@ -1,0 +1,3 @@
+[submodule "external/hlslib"]
+	path = external/hlslib
+	url = https://github.com/definelicht/hlslib.git
