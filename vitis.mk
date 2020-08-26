@@ -42,7 +42,7 @@ host: all
 clean_targets += clean-vitis
 
 .PHONY: clean-vitis
-clean-vitis
+clean-vitis:
 	rm -rf _x .Xil .ipcache .run
 	rm -rf emconfig.json sample_compile.ini sample_link.ini
 	rm -rf *.log *.jou *.wcfg *.wdb
@@ -51,7 +51,7 @@ clean-vitis
 	test $(xclobj_dir) != "." && rm -rf $(xclobj_dir) || true
 
 .PHONY: help
-help
+help:
 	@echo "make host"
 	@echo "make device"
 	@echo "make clean"

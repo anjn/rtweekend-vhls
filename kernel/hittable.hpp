@@ -81,6 +81,7 @@ struct hittable_list
     auto closest_so_far = t_max;
 
     for (const auto& object : objects) {
+#pragma HLS UNROLL
       if (object.valid && object.hit(r, t_min, closest_so_far, temp_rec)) {
         hit_anything = true;
         closest_so_far = temp_rec.t;

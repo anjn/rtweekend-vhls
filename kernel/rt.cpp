@@ -32,8 +32,11 @@ struct ray_info
   ray r;
   color attenuation;
   uint8_t hit_count;
+
   uint8_t object_index;
-  bool finished;
+  hit_record rec;
+  bool hit_anything;
+  value_t closest_so_far;
 };
 
 struct object_info
@@ -74,7 +77,8 @@ pixels:
         ri.attenuation = color(a, a, a);
         ri.hit_count = 0;
         ri.object_index = 0;
-        ri.finished = false;
+        ri.hit_anything = false;
+        ri.closest_so_far = infinity;
 
         ray_o.Push(ri);
       }
@@ -85,23 +89,27 @@ pixels:
 void merge_stream(
   hlslib::Stream<ray_info, 8>& ray_i,
   hlslib::Stream<ray_info, 1024>& ray_loop_i,
+  hlslib::Stream<bool, 1>& done_i,
   hlslib::Stream<ray_info, 8>& ray_o
 ) {
+#pragma HLS INLINE off // Prevent auto inlining
   while (true)
   {
 #pragma HLS PIPELINE II=1
     ray_info ri;
     bool ri_valid = false;
+    bool done;
 
     if (ray_loop_i.ReadNonBlocking(ri)) {
       ri_valid = true;
     } else if (ray_i.ReadNonBlocking(ri)) {
       ri_valid = true;
+    } else if (done_i.ReadNonBlocking(done)) {
+      break;
     }
 
     if (ri_valid) {
       ray_o.Push(ri);
-      if (ri.finished) break;
     }
   }
 }
@@ -110,46 +118,66 @@ void hit_sphere(
   const render_info& p,
   const hittable_list& world,
   hlslib::Stream<ray_info, 8>& ray_i,
+  hlslib::Stream<bool, 1>& done_i,
   hlslib::Stream<ray_info, 8>& ray_o,
   hlslib::Stream<ray_info, 1024>& ray_loop_o
 ) {
   static random_in_unit_sphere rs;
 
-  int ray_count = 0;
+  ray_info ri;
+  bool done;
 
   while (true)
   {
 #pragma HLS PIPELINE II=1
-    ray_info ri;
+#pragma HLS DEPENDENCE variable=ray_i false
+#pragma HLS DEPENDENCE variable=ray_o false
+#pragma HLS DEPENDENCE variable=ray_loop_o false
+#pragma HLS DEPENDENCE variable=ri false
 
-    if (ray_i.ReadNonBlocking(ri)) {
-      if (ri.finished) break;
+    if (done_i.ReadNonBlocking(done)) {
+      break;
+    } else if (ray_i.ReadNonBlocking(ri)) {
+      //bool loop = false;
+      //
+      //hit_record rec;
+      //if (world.hit(ri.r, 0.001, infinity, rec)) {
+      //  ri.r = ray(rec.p, rec.normal + rs.next());
+      //  //ri.r = ray(rec.p, rec.normal);
+      //  ri.attenuation *= 0.5;
+      //  if (ri.hit_count < 8) loop = true;
+      //  ri.hit_count++;
+      //}
 
-      bool loop = false;
-
-      hit_record rec;
-      if (world.hit(ri.r, 0.001, infinity, rec)) {
-        ri.r = ray(rec.p, rec.normal + rs.next());
-        //ri.r = ray(rec.p, rec.normal);
-        ri.attenuation *= 0.5;
-        if (ri.hit_count < 8) loop = true;
-        ri.hit_count++;
+      bool loop = true;
+      hit_record temp_rec;
+      if (world.objects[ri.object_index].hit(ri.r, 0.001, ri.closest_so_far, temp_rec)) {
+        ri.hit_anything = true;
+        ri.closest_so_far = temp_rec.t;
+        ri.rec = temp_rec;
       }
 
-      bool out = !loop;
-  
-      if (!loop && ray_count == p.num_rays - 1) {
-        ri.finished = true;
-        loop = true;
+      if (ri.object_index == MAX_OBJECTS - 1) {
+        loop = false;
+        if (ri.hit_anything) {
+          ri.r = ray(ri.rec.p, ri.rec.normal + rs.next());
+          ri.attenuation *= 0.5;
+          if (ri.hit_count < 8) loop = true;
+          ri.hit_count++;
+          // Reset
+          ri.object_index = 0;
+          ri.rec;
+          ri.hit_anything = false;
+          ri.closest_so_far = infinity;
+        }
+      } else {
+        ri.object_index++;
       }
-  
+
       if (loop) {
         ray_loop_o.Push(ri);
-      }
-
-      if (out) {
+      } else {
         ray_o.Push(ri);
-        ray_count++;
       }
     }
   }
@@ -158,7 +186,8 @@ void hit_sphere(
 void light(
   const render_info& p,
   hlslib::Stream<ray_info, 8>& ray_i,
-  hlslib::Stream<ray_info, 8>& ray_o
+  hlslib::Stream<ray_info, 8>& ray_o,
+  hlslib::Stream<bool, 1> done_o[2]
 ) {
   for (int i=0; i<p.num_rays; i++) {
 #pragma HLS PIPELINE II=1
@@ -179,6 +208,9 @@ void light(
 
     ray_o.Push(ri);
   }
+
+  done_o[0].Push(true);
+  done_o[1].Push(true);
 }
 
 void buffer(
@@ -220,7 +252,7 @@ accum:
 
 output:
   for (int i=0; i<p.num_pixels/num_urams; i++) {
-#pragma HLS PIPELIE II=1
+#pragma HLS PIPELINE II=1
 #pragma HLS DEPENDENCE variable=buf_r inter false
 #pragma HLS DEPENDENCE variable=buf_g inter false
 #pragma HLS DEPENDENCE variable=buf_b inter false
@@ -299,12 +331,13 @@ void rt(
   hlslib::Stream<ray_info, 8>      ray_strm2;
   hlslib::Stream<ray_info, 8>      ray_strm3;
   hlslib::Stream<ray_info, 8>      ray_strm4;
-  hlslib::Stream<pixel_block, 256> color_strm0;
+  hlslib::Stream<pixel_block, 256> color_strm0("pixel_strm");
+  hlslib::Stream<bool, 1>          done_strm0[2];
 
   HLSLIB_DATAFLOW_FUNCTION(generate_ray, p, ray_strm0);
-  HLSLIB_DATAFLOW_FUNCTION(merge_stream, ray_strm0, ray_strm1, ray_strm4);
-  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, ray_strm4, ray_strm2, ray_strm1);
-  HLSLIB_DATAFLOW_FUNCTION(light, p, ray_strm2, ray_strm3);
+  HLSLIB_DATAFLOW_FUNCTION(merge_stream, ray_strm0, ray_strm1, done_strm0[0], ray_strm4);
+  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, ray_strm4, done_strm0[1], ray_strm2, ray_strm1);
+  HLSLIB_DATAFLOW_FUNCTION(light, p, ray_strm2, ray_strm3, done_strm0);
   HLSLIB_DATAFLOW_FUNCTION(buffer, p, ray_strm3, color_strm0);
   HLSLIB_DATAFLOW_FUNCTION(write_mem, p, color_strm0, image);
 

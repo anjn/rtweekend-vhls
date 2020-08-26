@@ -14,11 +14,16 @@ using value_t = float;
 const value_t infinity = 10000.0;
 const value_t pi = 3.1415926535897932385;
 
-class vec3 {
-public:
+struct vec3 {
   //vec3() : e{0,0,0} {}
-  vec3() {}
-  vec3(value_t e0, value_t e1, value_t e2) : e {e0, e1, e2} {}
+  vec3() {
+#pragma HLS INLINE
+#pragma HLS ARRAY_PARTITION variable=e complete
+  }
+  vec3(value_t e0, value_t e1, value_t e2) : e {e0, e1, e2} {
+#pragma HLS INLINE
+#pragma HLS ARRAY_PARTITION variable=e complete
+  }
 
   value_t x() const { return e[0]; }
   value_t y() const { return e[1]; }
@@ -68,7 +73,6 @@ public:
 //    return vec3(random_norm::gen(r, min, max), random_norm::gen(r, min, max), random_norm::gen(r, min, max));
 //  };
 
-public:
   value_t e[3];
 };
 

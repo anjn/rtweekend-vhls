@@ -17,8 +17,8 @@ rtl_kernels :=
 
 build ?= hw
 
-kernel_flags += -std=c++14
-vpp_flags += --kernel_frequency 400 --save-temps -Ikernel
+kernel_flags += -std=c++17
+vpp_flags += --kernel_frequency 400 --save-temps -Ikernel -Iexternal/hlslib/include -DHLSLIB_SYNTHESIS
 vpp_flags += -g
 vpp_compile_flags +=
 vpp_link_flags += --report_level 1
