@@ -10,9 +10,9 @@ int main(int argc, char** argv)
   //const int samples_per_pixel = 8;
   //const int image_width = SIM_WIDTH;
   //const int image_height = SIM_HEIGHT;
-  const int samples_per_pixel = 8;
-  const int image_width = 960;
-  const int image_height = 540;
+  const int samples_per_pixel = 1;
+  const int image_width = 480*4*2;
+  const int image_height = 270*4*2;
 
   std::vector<pixel> image(image_width * image_height);
   auto image_ptr = reinterpret_cast<pixel_block*>(image.data());

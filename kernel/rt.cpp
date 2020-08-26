@@ -1,3 +1,4 @@
+#include <iostream>
 #include <tuple>
 
 #include "ap_int.h"
@@ -5,13 +6,14 @@
 
 #include "hlslib/xilinx/Stream.h"
 #include "hlslib/xilinx/Simulation.h"
+#include "hlslib/xilinx/Utility.h"
 
 #include "rt.hpp"
 #include "rtweekend.hpp"
 #include "camera.hpp"
 
 const int MAX_HIT = 16;
-const int MAX_BUFFER_HEIGHT = 256;
+const uint16_t MAX_BUFFER_HEIGHT = 32;
 
 struct render_info
 {
@@ -23,6 +25,8 @@ struct render_info
   uint16_t end_y;
   uint16_t samples_per_pixel;
 
+  uint8_t cache_w_log2;
+  uint8_t cache_h_log2;
   uint16_t render_w;
   uint16_t render_h;
   uint32_t num_pixels;
@@ -79,19 +83,25 @@ using pix_ray_hit_stream    = hlslib::Stream<std::tuple<pixel_position, pixel_in
 using pix_ray_hit_stream_fb = hlslib::Stream<std::tuple<pixel_position, pixel_info, ray_info, hit_info>, 512>;
 using ray_hit_stream        = hlslib::Stream<std::tuple<ray_info, hit_info>, 8>;
 using pix_blk_stream        = hlslib::Stream<pixel_block, 128>;
-using line_stream           = hlslib::Stream<uint16_t, MAX_BUFFER_HEIGHT>;
+using line_stream           = hlslib::Stream<uint16_t, 8>;
+using line_stream_fb        = hlslib::Stream<uint16_t, MAX_BUFFER_HEIGHT>;
 using done_stream           = hlslib::Stream<bool>;
 
 void generate_pixel(
   const render_info& p,
+  line_stream_fb& y_i,
   pos_stream& pos_o
 ) {
 scanlines:
   for (uint16_t y=0; y<p.render_h; y++) {
+    uint16_t line = y;
+    if (line >= MAX_BUFFER_HEIGHT) {
+      line = y_i.Pop();
+    }
 pixels:
     for (uint16_t x=0; x<p.render_w; x++) {
 #pragma HLS PIPELINE II=1 rewind
-      pos_o.Push({x, y});
+      pos_o.Push({x, line});
     }
   }
 }
@@ -329,16 +339,24 @@ void light(
   done_o[2].Push(true);
 }
 
-void buffer(
-  const render_info& p,
-  pix_stream& pix_i,
-  pix_blk_stream& blk_o
-) {
-  constexpr int num_urams = std::tuple_size<pixel_block>::value;
+struct buffer_memory
+{
+  constexpr static int num_urams = std::tuple_size<pixel_block>::value;
+  constexpr static int num_pixels = 4096 * 8 * num_urams;
+  constexpr static int num_pixels_clog2 = hlslib::ConstLog2(num_pixels - 1); // 19
+
   // URAM: 64bit(=uint8 * 8) 4K words
-  static uint8_t buf_r[4096*8][num_urams] = {0};
-  static uint8_t buf_g[4096*8][num_urams] = {0};
-  static uint8_t buf_b[4096*8][num_urams] = {0};
+  uint8_t buf_r[4096*8][num_urams];
+  uint8_t buf_g[4096*8][num_urams];
+  uint8_t buf_b[4096*8][num_urams];
+
+  uint16_t buffer_w;
+  uint16_t buffer_h;
+  uint8_t buffer_w_clog2;
+
+  buffer_memory(const render_info& p)
+  {
+#pragma HLS INLINE
 #pragma HLS BIND_STORAGE variable=buf_r type=RAM_S2P impl=uram
 #pragma HLS BIND_STORAGE variable=buf_g type=RAM_S2P impl=uram
 #pragma HLS BIND_STORAGE variable=buf_b type=RAM_S2P impl=uram
@@ -349,54 +367,122 @@ void buffer(
 #pragma HLS ARRAY_RESHAPE variable=buf_g cyclic factor=8 dim=1
 #pragma HLS ARRAY_RESHAPE variable=buf_b cyclic factor=8 dim=1
 
-accum:
+    // width
+    buffer_w_clog2 = 8;
+    do {
+      buffer_w_clog2++;
+      buffer_w = 1 << buffer_w_clog2;
+    } while (p.render_w > buffer_w);
+
+    // height
+    buffer_h = std::min(p.render_h, MAX_BUFFER_HEIGHT);
+  }
+
+  void store(const pixel_position& pos, const pixel_info& pix)
+  {
+#pragma HLS INLINE
+    uint32_t buffer_y = pos.y & (MAX_BUFFER_HEIGHT - 1);
+    uint32_t index = (buffer_y << buffer_w_clog2) | pos.x;
+    int addr_a = index / (num_urams);
+    int addr_b = index % (num_urams);
+
+    assert(addr_a < 4096*8);
+
+    buf_r[addr_a][addr_b] = clamp(int(pix.p[0]), 0, 255);
+    buf_g[addr_a][addr_b] = clamp(int(pix.p[1]), 0, 255);
+    buf_b[addr_a][addr_b] = clamp(int(pix.p[2]), 0, 255);
+  }
+};
+
+void buffer_write(
+  const render_info& p,
+  buffer_memory& buf,
+  pix_stream& pix_i,
+  line_stream& y_o
+) {
+  uint16_t pixel_count[MAX_BUFFER_HEIGHT];
+
+init:
+  for (uint16_t y=0; y<buf.buffer_h; y++) {
+    pixel_count[y] = 0;
+  }
+
+write:
   for (int i=0; i<p.num_pixels; i++) {
 #pragma HLS PIPELINE
     pixel_position pos;
     pixel_info pix;
     std::tie(pos, pix) = pix_i.Pop();
 
-    //auto [pos, pix] = pix_i.Pop();
+    buf.store(pos, pix);
 
-    int index = p.render_w * pos.y + pos.x;
-    int addr_a = index / (num_urams);
-    int addr_b = index % (num_urams);
+    auto buffer_y = pos.y & (MAX_BUFFER_HEIGHT - 1);
+    auto count = pixel_count[buffer_y];
 
-    buf_r[addr_a][addr_b] = clamp(int(pix.p[0]), 0, 255);
-    buf_g[addr_a][addr_b] = clamp(int(pix.p[1]), 0, 255);
-    buf_b[addr_a][addr_b] = clamp(int(pix.p[2]), 0, 255);
-  }
+    if (count == p.render_w - 1) {
+      y_o.Push(pos.y);
 
-output:
-  for (int i=0; i<p.num_pixels/num_urams; i++) {
-#pragma HLS PIPELINE II=1
-#pragma HLS DEPENDENCE variable=buf_r inter false
-#pragma HLS DEPENDENCE variable=buf_g inter false
-#pragma HLS DEPENDENCE variable=buf_b inter false
-    pixel_block c;
-    for (int j=0; j<num_urams; j++) {
-      c[j].r = buf_r[i][j];
-      c[j].g = buf_g[i][j];
-      c[j].b = buf_b[i][j];
-      c[j].a = 255;
-      buf_r[i][j] = 0;
-      buf_g[i][j] = 0;
-      buf_b[i][j] = 0;
+      count = 0;
+    } else {
+      count++;
     }
-    blk_o.Push(c);
+
+    pixel_count[buffer_y] = count;
+  }
+}
+
+void buffer_read(
+  const render_info& p,
+  buffer_memory& buf,
+  line_stream& y_i,
+  line_stream& y_o,
+  line_stream_fb& y_loop_o,
+  pix_blk_stream& blk_o
+) {
+read:
+  for (int i=0; i<p.render_h; i++) {
+    auto y = y_i.Pop();
+    auto buffer_y = y & (MAX_BUFFER_HEIGHT - 1);
+    auto index = buffer_y << buf.buffer_w_clog2;
+    auto addr_a = index / buffer_memory::num_urams;
+
+    y_o.Push(y);
+    
+    uint16_t next_y = y + MAX_BUFFER_HEIGHT;
+    if (next_y < p.render_h)
+      y_loop_o.Push(next_y);
+
+    for (int j=0; j<p.render_w/buffer_memory::num_urams; j++) {
+#pragma HLS PIPELINE II=1
+      pixel_block b;
+      for (int k=0; k<buffer_memory::num_urams; k++) {
+        b[k].r = buf.buf_r[addr_a + j][k];
+        b[k].g = buf.buf_g[addr_a + j][k];
+        b[k].b = buf.buf_b[addr_a + j][k];
+        b[k].a = 255;
+      }
+      blk_o.Push(b);
+    }
   }
 }
 
 void write_mem(
   const render_info& p,
-  pix_blk_stream& color_i,
+  line_stream& y_i,
+  pix_blk_stream& blk_i,
   pixel_block* image
 ) {
   constexpr auto block_w = std::tuple_size<pixel_block>::value;
-  for (int y=p.start_y; y<p.end_y; y++) {
+  for (uint16_t i=0; i<p.render_h; i++) {
+    auto y = y_i.Pop();
+
+#ifndef HLSLIB_SYNTHESIS
+    std::cout << "Write line : " << y << std::endl;
+#endif
+
     for (int x=0; x<p.render_w/block_w; x++) {
 #pragma HLS PIPELINE II=1 rewind
-      image[y * p.image_w/block_w + p.start_x/block_w + x] = color_i.Pop();
+      image[y * p.image_w/block_w + p.start_x/block_w + x] = blk_i.Pop();
     }
   }
 }
@@ -443,6 +529,11 @@ void rt(
   world.objects[0].set(point3(0,0,-1), 0.5);
   world.objects[1].set(point3(0,-100.5,-1), 100);
 
+  static buffer_memory buf(p);
+//#pragma HLS SHARED variable=buf.buf_r
+//#pragma HLS SHARED variable=buf.buf_g
+//#pragma HLS SHARED variable=buf.buf_b
+
 #define INST_STREAM(type, name) type name(#name)
 
   INST_STREAM(pos_stream,            stage0_pos);
@@ -454,19 +545,33 @@ void rt(
   INST_STREAM(pix_ray_hit_stream_fb, stage4_ray_loop);
   INST_STREAM(pix_stream,            stage5_pix);
   INST_STREAM(pix_stream_fb,         stage5_pix_loop);
-  INST_STREAM(pix_blk_stream,        stage6_blk);
+  INST_STREAM(line_stream,           stage6_line);
+  INST_STREAM(pix_blk_stream,        stage7_blk);
+  INST_STREAM(line_stream,           stage7_line);
+  INST_STREAM(line_stream_fb,        stage7_line_loop);
 
   done_stream done[3];
 
   HLSLIB_DATAFLOW_INIT();
-  HLSLIB_DATAFLOW_FUNCTION(generate_pixel, p, stage0_pos);
+  // Stage 0
+  HLSLIB_DATAFLOW_FUNCTION(generate_pixel, p, stage7_line_loop, stage0_pos);
+  // Stage 1
   HLSLIB_DATAFLOW_FUNCTION(merge_pixel, stage0_pos, stage5_pix_loop, done[0], stage1_pix);
+  // Stage 2
   HLSLIB_DATAFLOW_FUNCTION(generate_ray, p, stage1_pix, stage2_ray);
+  // Stage 3
   HLSLIB_DATAFLOW_FUNCTION(merge_hit, stage2_ray, stage4_ray_loop, done[1], stage3_ray, stage3_pix);
+  // Stage 4
   HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, stage3_ray, stage3_pix, done[2], stage4_ray, stage4_ray_loop);
+  // Stage 5
   HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, stage5_pix, stage5_pix_loop, done);
-  HLSLIB_DATAFLOW_FUNCTION(buffer, p, stage5_pix, stage6_blk);
-  HLSLIB_DATAFLOW_FUNCTION(write_mem, p, stage6_blk, image);
+  // Stage 6
+  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, buf, stage5_pix, stage6_line);
+  // Stage 7
+  HLSLIB_DATAFLOW_FUNCTION(buffer_read, p, buf, stage6_line, stage7_line, stage7_line_loop, stage7_blk);
+  // Stage 8
+  HLSLIB_DATAFLOW_FUNCTION(write_mem, p, stage7_line, stage7_blk, image);
+
   HLSLIB_DATAFLOW_FINALIZE();
 }
 
