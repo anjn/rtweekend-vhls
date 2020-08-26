@@ -24,9 +24,10 @@ int main(int argc, char **argv) {
 
   auto rt_kernel = cl::Kernel(program, "rt");
 
-  const int samples_per_pixel = 8;
-  const int image_width = 192;
-  const int image_height = 108;
+  // For hw_emu
+  const int samples_per_pixel = 2;
+  const int image_width = 64;
+  const int image_height = 36;
 
   host_buffer<uint32_t> host_image(image_width * image_height);
   cl::Memory device_image = make_device_buffer(context, CL_MEM_WRITE_ONLY, host_image);
