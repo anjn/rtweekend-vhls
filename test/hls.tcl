@@ -1,5 +1,5 @@
 open_project -reset prj
-set cflags "-std=c++17 -I../kernel -I../external/hlslib/include"
+set cflags "-I../kernel -I../external/hlslib/include -std=c++14"
 if {$csynth == 1} {
   set cflags "$cflags -DHLSLIB_SYNTHESIS"
 }

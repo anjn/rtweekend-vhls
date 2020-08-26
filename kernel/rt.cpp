@@ -1,4 +1,4 @@
-#include <iostream>
+#include <tuple>
 
 #include "ap_int.h"
 #include "hls_stream.h"
@@ -9,6 +9,9 @@
 #include "rt.hpp"
 #include "rtweekend.hpp"
 #include "camera.hpp"
+
+const int MAX_HIT = 16;
+const int MAX_BUFFER_HEIGHT = 256;
 
 struct render_info
 {
@@ -28,15 +31,36 @@ struct render_info
 
 struct ray_info
 {
-  uint32_t pixel_index;
   ray r;
   color attenuation;
   uint8_t hit_count;
+};
 
+struct hit_info
+{
   uint8_t object_index;
   hit_record rec;
   bool hit_anything;
   value_t closest_so_far;
+};
+
+void init(hit_info& hi) {
+#pragma HLS INLINE
+  hi.object_index = 0;
+  hi.hit_anything = false;
+  hi.closest_so_far = infinity;
+}
+
+struct pixel_position
+{
+  uint16_t x;
+  uint16_t y;
+};
+
+struct pixel_info
+{
+  color p;
+  uint16_t sample_count;
 };
 
 struct object_info
@@ -47,9 +71,78 @@ struct object_info
   value_t fuzz;
 };
 
+using pos_stream            = hlslib::Stream<pixel_position, 8>;
+using pix_stream            = hlslib::Stream<std::tuple<pixel_position, pixel_info>, 8>;
+using pix_stream_fb         = hlslib::Stream<std::tuple<pixel_position, pixel_info>, 1024>;
+using pix_ray_stream        = hlslib::Stream<std::tuple<pixel_position, pixel_info, ray_info>, 8>;
+using pix_ray_hit_stream    = hlslib::Stream<std::tuple<pixel_position, pixel_info, ray_info, hit_info>, 8>;
+using pix_ray_hit_stream_fb = hlslib::Stream<std::tuple<pixel_position, pixel_info, ray_info, hit_info>, 512>;
+using ray_hit_stream        = hlslib::Stream<std::tuple<ray_info, hit_info>, 8>;
+using pix_blk_stream        = hlslib::Stream<pixel_block, 128>;
+using line_stream           = hlslib::Stream<uint16_t, MAX_BUFFER_HEIGHT>;
+using done_stream           = hlslib::Stream<bool>;
+
+void generate_pixel(
+  const render_info& p,
+  pos_stream& pos_o
+) {
+scanlines:
+  for (uint16_t y=0; y<p.render_h; y++) {
+pixels:
+    for (uint16_t x=0; x<p.render_w; x++) {
+#pragma HLS PIPELINE II=1 rewind
+      pos_o.Push({x, y});
+    }
+  }
+}
+
+void merge_pixel(
+  pos_stream& pos_i,
+  pix_stream_fb& pix_loop_i,
+  done_stream& done_i,
+  pix_stream& pix_o
+) {
+#pragma HLS INLINE off // Prevent auto inlining
+  while (true)
+  {
+#pragma HLS PIPELINE II=1
+    pixel_position pos;
+    pixel_info pix;
+    bool input_valid = false;
+    bool done;
+
+    if (!pix_loop_i.IsEmpty())
+    {
+      input_valid = true;
+
+      std::tie(pos, pix) = pix_loop_i.Pop();
+    }
+    else if (!pos_i.IsEmpty())
+    {
+      input_valid = true;
+
+      pos = pos_i.Pop();
+      // Init pixel_info
+      pix.p[0] = 0.0f;
+      pix.p[1] = 0.0f;
+      pix.p[2] = 0.0f;
+      pix.sample_count = 0;
+    }
+    else if (done_i.ReadNonBlocking(done))
+    {
+      break;
+    }
+
+    if (input_valid) {
+      pix_o.Push({pos, pix});
+    }
+  }
+}
+
 void generate_ray(
   const render_info& p,
-  hlslib::Stream<ray_info, 8>& ray_o
+  pix_stream& pix_i,
+  pix_ray_stream& ray_o
 ) {
   static xorshift32 rx(2463534242);
   static xorshift32 ry(1463534242);
@@ -58,58 +151,68 @@ void generate_ray(
 
   camera cam;
 
-samples:
-  for (int s=0; s<p.samples_per_pixel; s++) {
-scanlines:
-    for (int y=0; y<p.render_h; y++) {
-pixels:
-      for (int x=0; x<p.render_w; x++) {
-#pragma HLS PIPELINE II=1 rewind
-        value_t rand_x = ((x + p.start_x) << 16) + (rx.next() & ((1<<16)-1));
-        value_t rand_y = ((y + p.start_y) << 16) + (ry.next() & ((1<<16)-1));
+  for (uint32_t i=0; i<p.num_rays; i++) {
+//#pragma HLS PIPELINE
+    //auto [pos, pix] = pix_i.Pop();
+    pixel_position pos;
+    pixel_info pix;
+    std::tie(pos, pix) = pix_i.Pop();
 
-        value_t u = rand_x / (p.image_w << 16);
-        value_t v = rand_y / (p.image_h << 16);
+    value_t rand_x = ((pos.x + p.start_x) << 16) + (rx.next() & ((1<<16)-1));
+    value_t rand_y = ((pos.y + p.start_y) << 16) + (ry.next() & ((1<<16)-1));
 
-        ray_info ri;
-        ri.pixel_index = p.render_w * y + x;
-        ri.r = cam.get_ray(u, v);
-        ri.attenuation = color(a, a, a);
-        ri.hit_count = 0;
-        ri.object_index = 0;
-        ri.hit_anything = false;
-        ri.closest_so_far = infinity;
+    value_t u = rand_x / (p.image_w << 16);
+    value_t v = rand_y / (p.image_h << 16);
 
-        ray_o.Push(ri);
-      }
-    }
+    ray_info ri;
+    ri.r = cam.get_ray(u, v);
+    ri.attenuation = color(a, a, a);
+    ri.hit_count = 0;
+
+    ray_o.Push({pos, pix, ri});
   }
 }
 
-void merge_stream(
-  hlslib::Stream<ray_info, 8>& ray_i,
-  hlslib::Stream<ray_info, 1024>& ray_loop_i,
-  hlslib::Stream<bool, 1>& done_i,
-  hlslib::Stream<ray_info, 8>& ray_o
+void merge_hit(
+  pix_ray_stream& ray_i,
+  pix_ray_hit_stream_fb& ray_loop_i,
+  done_stream& done_i,
+  ray_hit_stream& ray_o,
+  pix_ray_hit_stream& pix_o
 ) {
 #pragma HLS INLINE off // Prevent auto inlining
   while (true)
   {
 #pragma HLS PIPELINE II=1
+    pixel_position pos;
+    pixel_info pix;
     ray_info ri;
-    bool ri_valid = false;
+    hit_info hi;
+    bool input_valid = false;
     bool done;
 
-    if (ray_loop_i.ReadNonBlocking(ri)) {
-      ri_valid = true;
-    } else if (ray_i.ReadNonBlocking(ri)) {
-      ri_valid = true;
-    } else if (done_i.ReadNonBlocking(done)) {
+    if (!ray_loop_i.IsEmpty())
+    {
+      input_valid = true;
+
+      std::tie(pos, pix, ri, hi) = ray_loop_i.Pop();
+    }
+    else if (!ray_i.IsEmpty())
+    {
+      input_valid = true;
+
+      std::tie(pos, pix, ri) = ray_i.Pop();
+      // Init hit_info
+      init(hi);
+    }
+    else if (done_i.ReadNonBlocking(done))
+    {
       break;
     }
 
-    if (ri_valid) {
-      ray_o.Push(ri);
+    if (input_valid) {
+      ray_o.Push({ri, hi});
+      pix_o.Push({pos, pix, ri, hi});
     }
   }
 }
@@ -117,67 +220,69 @@ void merge_stream(
 void hit_sphere(
   const render_info& p,
   const hittable_list& world,
-  hlslib::Stream<ray_info, 8>& ray_i,
-  hlslib::Stream<bool, 1>& done_i,
-  hlslib::Stream<ray_info, 8>& ray_o,
-  hlslib::Stream<ray_info, 1024>& ray_loop_o
+  ray_hit_stream& ray_i,
+  pix_ray_hit_stream& pix_i,
+  done_stream& done_i,
+  pix_ray_stream& ray_o,
+  pix_ray_hit_stream_fb& ray_loop_o
 ) {
   static random_in_unit_sphere rs;
 
-  ray_info ri;
-  bool done;
-
+hit_sphere_main:
   while (true)
   {
-#pragma HLS PIPELINE II=1
-#pragma HLS DEPENDENCE variable=ray_i false
-#pragma HLS DEPENDENCE variable=ray_o false
-#pragma HLS DEPENDENCE variable=ray_loop_o false
-#pragma HLS DEPENDENCE variable=ri false
+    bool done;
 
     if (done_i.ReadNonBlocking(done)) {
       break;
-    } else if (ray_i.ReadNonBlocking(ri)) {
-      //bool loop = false;
-      //
-      //hit_record rec;
-      //if (world.hit(ri.r, 0.001, infinity, rec)) {
-      //  ri.r = ray(rec.p, rec.normal + rs.next());
-      //  //ri.r = ray(rec.p, rec.normal);
-      //  ri.attenuation *= 0.5;
-      //  if (ri.hit_count < 8) loop = true;
-      //  ri.hit_count++;
-      //}
+    } else if (!ray_i.IsEmpty()) {
 
-      bool loop = true;
-      hit_record temp_rec;
-      if (world.objects[ri.object_index].hit(ri.r, 0.001, ri.closest_so_far, temp_rec)) {
-        ri.hit_anything = true;
-        ri.closest_so_far = temp_rec.t;
-        ri.rec = temp_rec;
+      bool hit;
+      hit_record rec;
+      {
+        //auto [ri, hi] = ray_i.Pop();
+        ray_info ri;
+        hit_info hi;
+        std::tie(ri, hi) = ray_i.Pop();
+        hit = world.objects[hi.object_index].hit(ri.r, 0.001, hi.closest_so_far, rec);
       }
 
-      if (ri.object_index == MAX_OBJECTS - 1) {
+      pixel_position pos;
+      pixel_info pix;
+      ray_info ri;
+      hit_info hi;
+      std::tie(pos, pix, ri, hi) = pix_i.Pop();
+      //auto [pos, pix, ri, hi] = pix_i.Pop();
+
+      if (hit) {
+        hi.hit_anything = true;
+        hi.closest_so_far = rec.t;
+        hi.rec = rec;
+      }
+
+      auto rs_v = rs.next();
+      bool loop = true;
+
+      if (hi.object_index == MAX_OBJECTS - 1) {
         loop = false;
-        if (ri.hit_anything) {
-          ri.r = ray(ri.rec.p, ri.rec.normal + rs.next());
+
+        if (hi.hit_anything) {
+          // Create new ray
+          ri.r = ray(hi.rec.p, hi.rec.normal + rs_v);
           ri.attenuation *= 0.5;
-          if (ri.hit_count < 8) loop = true;
+          if (ri.hit_count < MAX_HIT) loop = true;
           ri.hit_count++;
-          // Reset
-          ri.object_index = 0;
-          ri.rec;
-          ri.hit_anything = false;
-          ri.closest_so_far = infinity;
+          // Reset hit_info
+          init(hi);
         }
       } else {
-        ri.object_index++;
+        hi.object_index++;
       }
 
       if (loop) {
-        ray_loop_o.Push(ri);
+        ray_loop_o.Push({pos, pix, ri, hi});
       } else {
-        ray_o.Push(ri);
+        ray_o.Push({pos, pix, ri});
       }
     }
   }
@@ -185,17 +290,22 @@ void hit_sphere(
 
 void light(
   const render_info& p,
-  hlslib::Stream<ray_info, 8>& ray_i,
-  hlslib::Stream<ray_info, 8>& ray_o,
-  hlslib::Stream<bool, 1> done_o[2]
+  pix_ray_stream& ray_i,
+  pix_stream& pix_o,
+  pix_stream_fb& pix_loop_o,
+  done_stream done_o[3]
 ) {
   for (int i=0; i<p.num_rays; i++) {
-#pragma HLS PIPELINE II=1
-    auto ri = ray_i.Pop();
+#pragma HLS PIPELINE
+    pixel_position pos;
+    pixel_info pix;
+    ray_info ri;
+    std::tie(pos, pix, ri) = ray_i.Pop();
+    //auto [pos, pix, ri] = ray_i.Pop();
 
     color rc { 0, 0, 0 };
 
-    if (ri.hit_count < 8) {
+    if (ri.hit_count < MAX_HIT) {
       vec3 unit_direction = unit_vector(ri.r.direction());
       value_t t = value_t(0.5)*(unit_direction.y() + value_t(1.0));
       rc = (value_t(1.0)-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
@@ -204,50 +314,57 @@ void light(
       rc[2] *= ri.attenuation[2];
     }
 
-    ri.attenuation = rc;
+    pix.p += rc;
+    pix.sample_count++;
 
-    ray_o.Push(ri);
+    if (pix.sample_count == p.samples_per_pixel) {
+      pix_o.Push({pos, pix});
+    } else {
+      pix_loop_o.Push({pos, pix});
+    }
   }
 
   done_o[0].Push(true);
   done_o[1].Push(true);
+  done_o[2].Push(true);
 }
 
 void buffer(
   const render_info& p,
-  hlslib::Stream<ray_info, 8>& ray_i,
-  hlslib::Stream<pixel_block, 256>& color_o
+  pix_stream& pix_i,
+  pix_blk_stream& blk_o
 ) {
   constexpr int num_urams = std::tuple_size<pixel_block>::value;
-  constexpr int num_bytes = num_urams * 32 * 1024;
-  constexpr int max_pixels = num_bytes / 4 / 3; // float
-  static float buf_r[4096*2][num_urams] = {0};
-  static float buf_g[4096*2][num_urams] = {0};
-  static float buf_b[4096*2][num_urams] = {0};
+  // URAM: 64bit(=uint8 * 8) 4K words
+  static uint8_t buf_r[4096*8][num_urams] = {0};
+  static uint8_t buf_g[4096*8][num_urams] = {0};
+  static uint8_t buf_b[4096*8][num_urams] = {0};
 #pragma HLS BIND_STORAGE variable=buf_r type=RAM_S2P impl=uram
 #pragma HLS BIND_STORAGE variable=buf_g type=RAM_S2P impl=uram
 #pragma HLS BIND_STORAGE variable=buf_b type=RAM_S2P impl=uram
 #pragma HLS ARRAY_PARTITION variable=buf_r complete dim=2
 #pragma HLS ARRAY_PARTITION variable=buf_g complete dim=2
 #pragma HLS ARRAY_PARTITION variable=buf_b complete dim=2
-#pragma HLS ARRAY_RESHAPE variable=buf_r cyclic factor=2 dim=1
-#pragma HLS ARRAY_RESHAPE variable=buf_g cyclic factor=2 dim=1
-#pragma HLS ARRAY_RESHAPE variable=buf_b cyclic factor=2 dim=1
+#pragma HLS ARRAY_RESHAPE variable=buf_r cyclic factor=8 dim=1
+#pragma HLS ARRAY_RESHAPE variable=buf_g cyclic factor=8 dim=1
+#pragma HLS ARRAY_RESHAPE variable=buf_b cyclic factor=8 dim=1
 
 accum:
-  for (int i=0; i<p.num_rays; i++) {
-#pragma HLS PIPELINE II=1
-#pragma HLS DEPENDENCE variable=buf_r inter false
-#pragma HLS DEPENDENCE variable=buf_g inter false
-#pragma HLS DEPENDENCE variable=buf_b inter false
-    auto ri = ray_i.Pop();
+  for (int i=0; i<p.num_pixels; i++) {
+#pragma HLS PIPELINE
+    pixel_position pos;
+    pixel_info pix;
+    std::tie(pos, pix) = pix_i.Pop();
 
-    int index = ri.pixel_index;
+    //auto [pos, pix] = pix_i.Pop();
+
+    int index = p.render_w * pos.y + pos.x;
     int addr_a = index / (num_urams);
     int addr_b = index % (num_urams);
-    buf_r[addr_a][addr_b] += ri.attenuation[0];
-    buf_g[addr_a][addr_b] += ri.attenuation[1];
-    buf_b[addr_a][addr_b] += ri.attenuation[2];
+
+    buf_r[addr_a][addr_b] = clamp(int(pix.p[0]), 0, 255);
+    buf_g[addr_a][addr_b] = clamp(int(pix.p[1]), 0, 255);
+    buf_b[addr_a][addr_b] = clamp(int(pix.p[2]), 0, 255);
   }
 
 output:
@@ -258,21 +375,21 @@ output:
 #pragma HLS DEPENDENCE variable=buf_b inter false
     pixel_block c;
     for (int j=0; j<num_urams; j++) {
-      c[j].r = clamp(int(buf_r[i][j]), 0, 255);
-      c[j].g = clamp(int(buf_g[i][j]), 0, 255);
-      c[j].b = clamp(int(buf_b[i][j]), 0, 255);
+      c[j].r = buf_r[i][j];
+      c[j].g = buf_g[i][j];
+      c[j].b = buf_b[i][j];
       c[j].a = 255;
       buf_r[i][j] = 0;
       buf_g[i][j] = 0;
       buf_b[i][j] = 0;
     }
-    color_o.Push(c);
+    blk_o.Push(c);
   }
 }
 
 void write_mem(
   const render_info& p,
-  hlslib::Stream<pixel_block, 256>& color_i,
+  pix_blk_stream& color_i,
   pixel_block* image
 ) {
   constexpr auto block_w = std::tuple_size<pixel_block>::value;
@@ -326,23 +443,30 @@ void rt(
   world.objects[0].set(point3(0,0,-1), 0.5);
   world.objects[1].set(point3(0,-100.5,-1), 100);
 
+#define INST_STREAM(type, name) type name(#name)
+
+  INST_STREAM(pos_stream,            stage0_pos);
+  INST_STREAM(pix_stream,            stage1_pix);
+  INST_STREAM(pix_ray_stream,        stage2_ray);
+  INST_STREAM(ray_hit_stream,        stage3_ray);
+  INST_STREAM(pix_ray_hit_stream,    stage3_pix);
+  INST_STREAM(pix_ray_stream,        stage4_ray);
+  INST_STREAM(pix_ray_hit_stream_fb, stage4_ray_loop);
+  INST_STREAM(pix_stream,            stage5_pix);
+  INST_STREAM(pix_stream_fb,         stage5_pix_loop);
+  INST_STREAM(pix_blk_stream,        stage6_blk);
+
+  done_stream done[3];
+
   HLSLIB_DATAFLOW_INIT();
-
-  hlslib::Stream<ray_info, 8>      ray_strm0;
-  hlslib::Stream<ray_info, 1024>   ray_strm1;
-  hlslib::Stream<ray_info, 8>      ray_strm2;
-  hlslib::Stream<ray_info, 8>      ray_strm3;
-  hlslib::Stream<ray_info, 8>      ray_strm4;
-  hlslib::Stream<pixel_block, 256> color_strm0("pixel_strm");
-  hlslib::Stream<bool, 1>          done_strm0[2];
-
-  HLSLIB_DATAFLOW_FUNCTION(generate_ray, p, ray_strm0);
-  HLSLIB_DATAFLOW_FUNCTION(merge_stream, ray_strm0, ray_strm1, done_strm0[0], ray_strm4);
-  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, ray_strm4, done_strm0[1], ray_strm2, ray_strm1);
-  HLSLIB_DATAFLOW_FUNCTION(light, p, ray_strm2, ray_strm3, done_strm0);
-  HLSLIB_DATAFLOW_FUNCTION(buffer, p, ray_strm3, color_strm0);
-  HLSLIB_DATAFLOW_FUNCTION(write_mem, p, color_strm0, image);
-
+  HLSLIB_DATAFLOW_FUNCTION(generate_pixel, p, stage0_pos);
+  HLSLIB_DATAFLOW_FUNCTION(merge_pixel, stage0_pos, stage5_pix_loop, done[0], stage1_pix);
+  HLSLIB_DATAFLOW_FUNCTION(generate_ray, p, stage1_pix, stage2_ray);
+  HLSLIB_DATAFLOW_FUNCTION(merge_hit, stage2_ray, stage4_ray_loop, done[1], stage3_ray, stage3_pix);
+  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, stage3_ray, stage3_pix, done[2], stage4_ray, stage4_ray_loop);
+  HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, stage5_pix, stage5_pix_loop, done);
+  HLSLIB_DATAFLOW_FUNCTION(buffer, p, stage5_pix, stage6_blk);
+  HLSLIB_DATAFLOW_FUNCTION(write_mem, p, stage6_blk, image);
   HLSLIB_DATAFLOW_FINALIZE();
 }
 
