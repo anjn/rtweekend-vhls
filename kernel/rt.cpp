@@ -346,10 +346,6 @@ struct buffer_memory
   constexpr static int num_pixels_clog2 = hlslib::ConstLog2(num_pixels - 1); // 19
 
   // URAM: 64bit(=uint8 * 8) 4K words
-  uint8_t buf_r[4096*8][num_urams];
-  uint8_t buf_g[4096*8][num_urams];
-  uint8_t buf_b[4096*8][num_urams];
-
   uint16_t buffer_w;
   uint16_t buffer_h;
   uint8_t buffer_w_clog2;
@@ -357,15 +353,6 @@ struct buffer_memory
   buffer_memory(const render_info& p)
   {
 #pragma HLS INLINE
-#pragma HLS BIND_STORAGE variable=buf_r type=RAM_S2P impl=uram
-#pragma HLS BIND_STORAGE variable=buf_g type=RAM_S2P impl=uram
-#pragma HLS BIND_STORAGE variable=buf_b type=RAM_S2P impl=uram
-#pragma HLS ARRAY_PARTITION variable=buf_r complete dim=2
-#pragma HLS ARRAY_PARTITION variable=buf_g complete dim=2
-#pragma HLS ARRAY_PARTITION variable=buf_b complete dim=2
-#pragma HLS ARRAY_RESHAPE variable=buf_r cyclic factor=8 dim=1
-#pragma HLS ARRAY_RESHAPE variable=buf_g cyclic factor=8 dim=1
-#pragma HLS ARRAY_RESHAPE variable=buf_b cyclic factor=8 dim=1
 
     // width
     buffer_w_clog2 = 8;
@@ -377,29 +364,21 @@ struct buffer_memory
     // height
     buffer_h = std::min(p.render_h, MAX_BUFFER_HEIGHT);
   }
-
-  void store(const pixel_position& pos, const pixel_info& pix)
-  {
-#pragma HLS INLINE
-    uint32_t buffer_y = pos.y & (MAX_BUFFER_HEIGHT - 1);
-    uint32_t index = (buffer_y << buffer_w_clog2) | pos.x;
-    int addr_a = index / (num_urams);
-    int addr_b = index % (num_urams);
-
-    assert(addr_a < 4096*8);
-
-    buf_r[addr_a][addr_b] = clamp(int(pix.p[0]), 0, 255);
-    buf_g[addr_a][addr_b] = clamp(int(pix.p[1]), 0, 255);
-    buf_b[addr_a][addr_b] = clamp(int(pix.p[2]), 0, 255);
-  }
 };
 
 void buffer_write(
   const render_info& p,
   buffer_memory& buf,
+  uint8_t buf_r[4096*8][buffer_memory::num_urams],
+  uint8_t buf_g[4096*8][buffer_memory::num_urams],
+  uint8_t buf_b[4096*8][buffer_memory::num_urams],
   pix_stream& pix_i,
   line_stream& y_o
 ) {
+#pragma HLS DEPENDENCE variable=buf_r false
+#pragma HLS DEPENDENCE variable=buf_g false
+#pragma HLS DEPENDENCE variable=buf_b false
+
   uint16_t pixel_count[MAX_BUFFER_HEIGHT];
 
 init:
@@ -409,14 +388,23 @@ init:
 
 write:
   for (int i=0; i<p.num_pixels; i++) {
-#pragma HLS PIPELINE
     pixel_position pos;
     pixel_info pix;
     std::tie(pos, pix) = pix_i.Pop();
 
-    buf.store(pos, pix);
+    // Write to buffer
+    uint32_t buffer_y = pos.y & (MAX_BUFFER_HEIGHT - 1);
+    uint32_t index = (buffer_y << buf.buffer_w_clog2) | pos.x;
+    int addr_a = index / (buffer_memory::num_urams);
+    int addr_b = index % (buffer_memory::num_urams);
 
-    auto buffer_y = pos.y & (MAX_BUFFER_HEIGHT - 1);
+    assert(addr_a < 4096*8);
+
+    buf_r[addr_a][addr_b] = clamp(int(pix.p[0]), 0, 255);
+    buf_g[addr_a][addr_b] = clamp(int(pix.p[1]), 0, 255);
+    buf_b[addr_a][addr_b] = clamp(int(pix.p[2]), 0, 255);
+
+    // Count pixels
     auto count = pixel_count[buffer_y];
 
     if (count == p.render_w - 1) {
@@ -434,11 +422,18 @@ write:
 void buffer_read(
   const render_info& p,
   buffer_memory& buf,
+  uint8_t buf_r[4096*8][buffer_memory::num_urams],
+  uint8_t buf_g[4096*8][buffer_memory::num_urams],
+  uint8_t buf_b[4096*8][buffer_memory::num_urams],
   line_stream& y_i,
   line_stream& y_o,
   line_stream_fb& y_loop_o,
   pix_blk_stream& blk_o
 ) {
+#pragma HLS DEPENDENCE variable=buf_r false
+#pragma HLS DEPENDENCE variable=buf_g false
+#pragma HLS DEPENDENCE variable=buf_b false
+
 read:
   for (int i=0; i<p.render_h; i++) {
     auto y = y_i.Pop();
@@ -453,12 +448,11 @@ read:
       y_loop_o.Push(next_y);
 
     for (int j=0; j<p.render_w/buffer_memory::num_urams; j++) {
-#pragma HLS PIPELINE II=1
       pixel_block b;
       for (int k=0; k<buffer_memory::num_urams; k++) {
-        b[k].r = buf.buf_r[addr_a + j][k];
-        b[k].g = buf.buf_g[addr_a + j][k];
-        b[k].b = buf.buf_b[addr_a + j][k];
+        b[k].r = buf_r[addr_a + j][k];
+        b[k].g = buf_g[addr_a + j][k];
+        b[k].b = buf_b[addr_a + j][k];
         b[k].a = 255;
       }
       blk_o.Push(b);
@@ -481,7 +475,6 @@ void write_mem(
 #endif
 
     for (int x=0; x<p.render_w/block_w; x++) {
-#pragma HLS PIPELINE II=1 rewind
       image[y * p.image_w/block_w + p.start_x/block_w + x] = blk_i.Pop();
     }
   }
@@ -530,9 +523,22 @@ void rt(
   world.objects[1].set(point3(0,-100.5,-1), 100);
 
   static buffer_memory buf(p);
-//#pragma HLS SHARED variable=buf.buf_r
-//#pragma HLS SHARED variable=buf.buf_g
-//#pragma HLS SHARED variable=buf.buf_b
+
+  uint8_t buf_r[4096*8][buffer_memory::num_urams];
+  uint8_t buf_g[4096*8][buffer_memory::num_urams];
+  uint8_t buf_b[4096*8][buffer_memory::num_urams];
+#pragma HLS BIND_STORAGE variable=buf_r type=RAM_S2P impl=uram
+#pragma HLS BIND_STORAGE variable=buf_g type=RAM_S2P impl=uram
+#pragma HLS BIND_STORAGE variable=buf_b type=RAM_S2P impl=uram
+#pragma HLS ARRAY_PARTITION variable=buf_r complete dim=2
+#pragma HLS ARRAY_PARTITION variable=buf_g complete dim=2
+#pragma HLS ARRAY_PARTITION variable=buf_b complete dim=2
+#pragma HLS ARRAY_RESHAPE variable=buf_r cyclic factor=8 dim=1
+#pragma HLS ARRAY_RESHAPE variable=buf_g cyclic factor=8 dim=1
+#pragma HLS ARRAY_RESHAPE variable=buf_b cyclic factor=8 dim=1
+#pragma HLS SHARED variable=buf_r
+#pragma HLS SHARED variable=buf_g
+#pragma HLS SHARED variable=buf_b
 
 #define INST_STREAM(type, name) type name(#name)
 
@@ -566,9 +572,9 @@ void rt(
   // Stage 5
   HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, stage5_pix, stage5_pix_loop, done);
   // Stage 6
-  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, buf, stage5_pix, stage6_line);
+  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, buf, buf_r, buf_g, buf_b, stage5_pix, stage6_line);
   // Stage 7
-  HLSLIB_DATAFLOW_FUNCTION(buffer_read, p, buf, stage6_line, stage7_line, stage7_line_loop, stage7_blk);
+  HLSLIB_DATAFLOW_FUNCTION(buffer_read, p, buf, buf_r, buf_g, buf_b, stage6_line, stage7_line, stage7_line_loop, stage7_blk);
   // Stage 8
   HLSLIB_DATAFLOW_FUNCTION(write_mem, p, stage7_line, stage7_blk, image);
 
