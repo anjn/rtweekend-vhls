@@ -35,5 +35,5 @@ write_reg
 sample_compile.ini
 sample_link.ini
 xilinx_u200_xdmaqsfp_201830_1
-test
+main
 .ipcache

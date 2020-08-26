@@ -306,6 +306,8 @@ void rt(
 #pragma HLS INTERFACE s_axilite port=return
 #pragma HLS INTERFACE ap_ctrl_hs port=return
 
+#pragma HLS DATAFLOW
+
   render_info p;
   p.image_w = image_w;
   p.image_h = image_h;

@@ -1,5 +1,5 @@
 # Host
-targets := test
+targets := main
 objects := ocl_common xcl2
 include_dirs := host kernel
 bin_dir := .
@@ -16,10 +16,13 @@ kernels := rt
 rtl_kernels := 
 
 build ?= hw
+#build := sw_emu
 
 kernel_flags += -std=c++17
-vpp_flags += --kernel_frequency 400 --save-temps -Ikernel -Iexternal/hlslib/include -DHLSLIB_SYNTHESIS
+vpp_flags += --kernel_frequency 400 --save-temps -Ikernel -Iexternal/hlslib/include
+vpp_flags += -DHLSLIB_SYNTHESIS
 vpp_flags += -g
+vpp_flags += --profile_kernel data:all:all:all
 vpp_compile_flags +=
 vpp_link_flags += --report_level 1
 vpp_link_flags += --config link.ini
