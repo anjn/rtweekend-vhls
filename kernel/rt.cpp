@@ -87,6 +87,9 @@ using line_stream           = hlslib::Stream<uint16_t, 8>;
 using line_stream_fb        = hlslib::Stream<uint16_t, MAX_BUFFER_HEIGHT>;
 using done_stream           = hlslib::Stream<bool>;
 
+using buf_wr_req_stream     = hlslib::Stream<std::tuple<uint32_t, uint8_t, uint8_t, uint8_t>, 8>;
+using buf_rd_req_stream     = hlslib::Stream<uint32_t, 8>;
+
 void generate_pixel(
   const render_info& p,
   line_stream_fb& y_i,
@@ -98,9 +101,10 @@ scanlines:
     if (line >= MAX_BUFFER_HEIGHT) {
       line = y_i.Pop();
     }
+
 pixels:
     for (uint16_t x=0; x<p.render_w; x++) {
-#pragma HLS PIPELINE II=1 rewind
+#pragma HLS PIPELINE
       pos_o.Push({x, line});
     }
   }
@@ -188,7 +192,7 @@ void merge_hit(
   pix_ray_hit_stream_fb& ray_loop_i,
   done_stream& done_i,
   ray_hit_stream& ray_o,
-  pix_ray_hit_stream& pix_o
+  pix_ray_hit_stream_fb& pix_o
 ) {
 #pragma HLS INLINE off // Prevent auto inlining
   while (true)
@@ -231,7 +235,7 @@ void hit_sphere(
   const render_info& p,
   const hittable_list& world,
   ray_hit_stream& ray_i,
-  pix_ray_hit_stream& pix_i,
+  pix_ray_hit_stream_fb& pix_i,
   done_stream& done_i,
   pix_ray_stream& ray_o,
   pix_ray_hit_stream_fb& ray_loop_o
@@ -302,8 +306,7 @@ void light(
   const render_info& p,
   pix_ray_stream& ray_i,
   pix_stream& pix_o,
-  pix_stream_fb& pix_loop_o,
-  done_stream done_o[3]
+  pix_stream_fb& pix_loop_o
 ) {
   for (int i=0; i<p.num_rays; i++) {
 #pragma HLS PIPELINE
@@ -333,16 +336,12 @@ void light(
       pix_loop_o.Push({pos, pix});
     }
   }
-
-  done_o[0].Push(true);
-  done_o[1].Push(true);
-  done_o[2].Push(true);
 }
 
 struct buffer_memory
 {
   constexpr static int num_urams = std::tuple_size<pixel_block>::value;
-  constexpr static int num_pixels = 4096 * 8 * num_urams;
+  constexpr static int num_pixels = 4096 * 2 * num_urams;
   constexpr static int num_pixels_clog2 = hlslib::ConstLog2(num_pixels - 1); // 19
 
   // URAM: 64bit(=uint8 * 8) 4K words
@@ -369,22 +368,10 @@ struct buffer_memory
 void buffer_write(
   const render_info& p,
   buffer_memory& buf,
-  uint8_t buf_r[4096*8][buffer_memory::num_urams],
-  uint8_t buf_g[4096*8][buffer_memory::num_urams],
-  uint8_t buf_b[4096*8][buffer_memory::num_urams],
   pix_stream& pix_i,
+  buf_wr_req_stream& wr_o,
   line_stream& y_o
 ) {
-#pragma HLS DEPENDENCE variable=buf_r false
-#pragma HLS DEPENDENCE variable=buf_g false
-#pragma HLS DEPENDENCE variable=buf_b false
-
-  uint16_t pixel_count[MAX_BUFFER_HEIGHT];
-
-init:
-  for (uint16_t y=0; y<buf.buffer_h; y++) {
-    pixel_count[y] = 0;
-  }
 
 write:
   for (int i=0; i<p.num_pixels; i++) {
@@ -395,51 +382,192 @@ write:
     // Write to buffer
     uint32_t buffer_y = pos.y & (MAX_BUFFER_HEIGHT - 1);
     uint32_t index = (buffer_y << buf.buffer_w_clog2) | pos.x;
-    int addr_a = index / (buffer_memory::num_urams);
-    int addr_b = index % (buffer_memory::num_urams);
 
-    assert(addr_a < 4096*8);
+    assert(index < buffer_memory::num_pixels);
+    uint8_t w[3];
+    w[0] = clamp(int(pix.p[0]), 0, 255);
+    w[1] = clamp(int(pix.p[1]), 0, 255);
+    w[2] = clamp(int(pix.p[2]), 0, 255);
+    wr_o.Push({index, w[0], w[1], w[2]});
 
-    buf_r[addr_a][addr_b] = clamp(int(pix.p[0]), 0, 255);
-    buf_g[addr_a][addr_b] = clamp(int(pix.p[1]), 0, 255);
-    buf_b[addr_a][addr_b] = clamp(int(pix.p[2]), 0, 255);
+    y_o.Push(pos.y);
+  }
+}
 
-    // Count pixels
-    auto count = pixel_count[buffer_y];
+template<typename T, int N>
+struct shifter
+{
+  struct item {
+    T data;
+    bool valid;
+  };
 
-    if (count == p.render_w - 1) {
-      y_o.Push(pos.y);
+  std::array<item, N> arr;
 
-      count = 0;
+  shifter() {
+#pragma HLS INLINE
+#pragma HLS ARRAY_PARTITION variable=arr complete
+    for (int i=0; i<N; i++) {
+      arr[i] = {T(), false};
+    }
+  }
+
+  item shift(const T& v) {
+    auto s = arr[0];
+    for (int i=0; i<N-1; i++) {
+      arr[i] = arr[i+1];
+    }
+    arr[N-1] = {v, true};
+    return s;
+  }
+
+  item shift() {
+    auto s = arr[0];
+    for (int i=0; i<N-1; i++) {
+      arr[i] = arr[i+1];
+    }
+    arr[N-1] = {T(), false};
+    return s;
+  }
+};
+
+void count_pixel(
+  const render_info& p,
+  line_stream& y_i,
+  done_stream& done_i,
+  line_stream& y_o
+) {
+  const int latency = 8;
+  using y_shifter = shifter<uint16_t, latency+1>;
+
+  y_shifter ys;
+
+  uint16_t pixel_count[MAX_BUFFER_HEIGHT];
+
+clear_counter:
+  for (uint16_t y=0; y<MAX_BUFFER_HEIGHT; y++) {
+#pragma HLS PIPELINE
+    pixel_count[y] = 0;
+  }
+
+  while (true) {
+#pragma HLS PIPELINE
+#pragma HLS LATENCY max=latency
+#pragma HLS DEPENDENCE variable=pixel_count inter false
+
+    y_shifter::item y;
+
+    if (!y_i.IsEmpty()) {
+      y = ys.shift(y_i.Pop());
     } else {
-      count++;
+      y = ys.shift();
     }
 
-    pixel_count[buffer_y] = count;
+    if (y.valid) {
+      int num = 1;
+      for (int i=0; i<latency; i++) {
+#pragma HLS UNROLL
+        auto tmp_y = ys.arr[i];
+        if (tmp_y.valid && tmp_y.data == y.data) {
+          num++;
+          ys.arr[i].valid = false;
+        }
+      }
+
+      uint32_t buffer_y = y.data & (MAX_BUFFER_HEIGHT - 1);
+      uint16_t count = pixel_count[buffer_y] + num;
+
+      assert(count <= p.render_w);
+
+      if (count == p.render_w) {
+        y_o.Push(y.data);
+        count = 0;
+      }
+
+      pixel_count[buffer_y] = count;
+    }
+
+    bool done;
+    if (done_i.ReadNonBlocking(done)) {
+      break;
+    }
+  }
+}
+
+void buffer(
+  buf_wr_req_stream& wr_i,
+  buf_rd_req_stream& rd_req_i,
+  done_stream& done_i,
+  pix_blk_stream& blk_o
+) {
+  uint8_t buf_r[buffer_memory::num_pixels];
+  uint8_t buf_g[buffer_memory::num_pixels];
+  uint8_t buf_b[buffer_memory::num_pixels];
+
+#pragma HLS BIND_STORAGE variable=buf_r type=RAM_S2P impl=uram
+#pragma HLS BIND_STORAGE variable=buf_g type=RAM_S2P impl=uram
+#pragma HLS BIND_STORAGE variable=buf_b type=RAM_S2P impl=uram
+//#pragma HLS ARRAY_PARTITION variable=buf_r complete dim=2
+//#pragma HLS ARRAY_PARTITION variable=buf_g complete dim=2
+//#pragma HLS ARRAY_PARTITION variable=buf_b complete dim=2
+#pragma HLS ARRAY_RESHAPE variable=buf_r cyclic factor=buffer_memory::num_urams dim=1
+#pragma HLS ARRAY_RESHAPE variable=buf_g cyclic factor=buffer_memory::num_urams dim=1
+#pragma HLS ARRAY_RESHAPE variable=buf_b cyclic factor=buffer_memory::num_urams dim=1
+//#pragma HLS SHARED variable=buf_r
+//#pragma HLS SHARED variable=buf_g
+//#pragma HLS SHARED variable=buf_b
+
+  while (true) {
+#pragma HLS PIPELINE
+#pragma HLS DEPENDENCE variable=buf_r inter false
+#pragma HLS DEPENDENCE variable=buf_g inter false
+#pragma HLS DEPENDENCE variable=buf_b inter false
+
+    if (!rd_req_i.IsEmpty())
+    {
+      auto addr = rd_req_i.Pop();
+
+      pixel_block b;
+      for (int k=0; k<buffer_memory::num_urams; k++) {
+#pragma HLS UNROLL
+        b[k].r = buf_r[(addr << 4) | k];
+        b[k].g = buf_g[(addr << 4) | k];
+        b[k].b = buf_b[(addr << 4) | k];
+        b[k].a = 255;
+      }
+      blk_o.Push(b);
+    }
+
+    if (!wr_i.IsEmpty())
+    {
+      uint32_t addr;
+      uint8_t p[3];
+      std::tie(addr, p[0], p[1], p[2]) = wr_i.Pop();
+      buf_r[addr] = p[0];
+      buf_g[addr] = p[1];
+      buf_b[addr] = p[2];
+    }
+
+    bool done;
+    if (done_i.ReadNonBlocking(done)) {
+      break;
+    }
   }
 }
 
 void buffer_read(
   const render_info& p,
   buffer_memory& buf,
-  uint8_t buf_r[4096*8][buffer_memory::num_urams],
-  uint8_t buf_g[4096*8][buffer_memory::num_urams],
-  uint8_t buf_b[4096*8][buffer_memory::num_urams],
   line_stream& y_i,
+  buf_rd_req_stream& rd_req_o,
   line_stream& y_o,
-  line_stream_fb& y_loop_o,
-  pix_blk_stream& blk_o
+  line_stream_fb& y_loop_o
 ) {
-#pragma HLS DEPENDENCE variable=buf_r false
-#pragma HLS DEPENDENCE variable=buf_g false
-#pragma HLS DEPENDENCE variable=buf_b false
-
 read:
   for (int i=0; i<p.render_h; i++) {
     auto y = y_i.Pop();
     auto buffer_y = y & (MAX_BUFFER_HEIGHT - 1);
     auto index = buffer_y << buf.buffer_w_clog2;
-    auto addr_a = index / buffer_memory::num_urams;
 
     y_o.Push(y);
     
@@ -448,14 +576,8 @@ read:
       y_loop_o.Push(next_y);
 
     for (int j=0; j<p.render_w/buffer_memory::num_urams; j++) {
-      pixel_block b;
-      for (int k=0; k<buffer_memory::num_urams; k++) {
-        b[k].r = buf_r[addr_a + j][k];
-        b[k].g = buf_g[addr_a + j][k];
-        b[k].b = buf_b[addr_a + j][k];
-        b[k].a = 255;
-      }
-      blk_o.Push(b);
+      uint32_t addr =  index + buffer_memory::num_urams * j;
+      rd_req_o.Push(addr >> 4);
     }
   }
 }
@@ -464,6 +586,7 @@ void write_mem(
   const render_info& p,
   line_stream& y_i,
   pix_blk_stream& blk_i,
+  done_stream done_o[5],
   pixel_block* image
 ) {
   constexpr auto block_w = std::tuple_size<pixel_block>::value;
@@ -477,6 +600,11 @@ void write_mem(
     for (int x=0; x<p.render_w/block_w; x++) {
       image[y * p.image_w/block_w + p.start_x/block_w + x] = blk_i.Pop();
     }
+  }
+
+  for (int i=0; i<5; i++) {
+#pragma HLS UNROLL
+    done_o[i].Push(true);
   }
 }
 
@@ -522,23 +650,7 @@ void rt(
   world.objects[0].set(point3(0,0,-1), 0.5);
   world.objects[1].set(point3(0,-100.5,-1), 100);
 
-  static buffer_memory buf(p);
-
-  uint8_t buf_r[4096*8][buffer_memory::num_urams];
-  uint8_t buf_g[4096*8][buffer_memory::num_urams];
-  uint8_t buf_b[4096*8][buffer_memory::num_urams];
-#pragma HLS BIND_STORAGE variable=buf_r type=RAM_S2P impl=uram
-#pragma HLS BIND_STORAGE variable=buf_g type=RAM_S2P impl=uram
-#pragma HLS BIND_STORAGE variable=buf_b type=RAM_S2P impl=uram
-#pragma HLS ARRAY_PARTITION variable=buf_r complete dim=2
-#pragma HLS ARRAY_PARTITION variable=buf_g complete dim=2
-#pragma HLS ARRAY_PARTITION variable=buf_b complete dim=2
-#pragma HLS ARRAY_RESHAPE variable=buf_r cyclic factor=8 dim=1
-#pragma HLS ARRAY_RESHAPE variable=buf_g cyclic factor=8 dim=1
-#pragma HLS ARRAY_RESHAPE variable=buf_b cyclic factor=8 dim=1
-#pragma HLS SHARED variable=buf_r
-#pragma HLS SHARED variable=buf_g
-#pragma HLS SHARED variable=buf_b
+  buffer_memory buf(p);
 
 #define INST_STREAM(type, name) type name(#name)
 
@@ -546,7 +658,7 @@ void rt(
   INST_STREAM(pix_stream,            stage1_pix);
   INST_STREAM(pix_ray_stream,        stage2_ray);
   INST_STREAM(ray_hit_stream,        stage3_ray);
-  INST_STREAM(pix_ray_hit_stream,    stage3_pix);
+  INST_STREAM(pix_ray_hit_stream_fb, stage3_pix);
   INST_STREAM(pix_ray_stream,        stage4_ray);
   INST_STREAM(pix_ray_hit_stream_fb, stage4_ray_loop);
   INST_STREAM(pix_stream,            stage5_pix);
@@ -556,7 +668,11 @@ void rt(
   INST_STREAM(line_stream,           stage7_line);
   INST_STREAM(line_stream_fb,        stage7_line_loop);
 
-  done_stream done[3];
+  INST_STREAM(buf_wr_req_stream,     stagex_wr);
+  INST_STREAM(buf_rd_req_stream,     stagex_rd);
+  INST_STREAM(line_stream,           stagex_line);
+
+  done_stream done[5];
 
   HLSLIB_DATAFLOW_INIT();
   // Stage 0
@@ -570,13 +686,16 @@ void rt(
   // Stage 4
   HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, stage3_ray, stage3_pix, done[2], stage4_ray, stage4_ray_loop);
   // Stage 5
-  HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, stage5_pix, stage5_pix_loop, done);
+  HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, stage5_pix, stage5_pix_loop);
   // Stage 6
-  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, buf, buf_r, buf_g, buf_b, stage5_pix, stage6_line);
+  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, buf, stage5_pix, stagex_wr, stage6_line);
+
+  HLSLIB_DATAFLOW_FUNCTION(buffer, stagex_wr, stagex_rd, done[3], stage7_blk);
+  HLSLIB_DATAFLOW_FUNCTION(count_pixel, p, stage6_line, done[4], stagex_line);
   // Stage 7
-  HLSLIB_DATAFLOW_FUNCTION(buffer_read, p, buf, buf_r, buf_g, buf_b, stage6_line, stage7_line, stage7_line_loop, stage7_blk);
+  HLSLIB_DATAFLOW_FUNCTION(buffer_read, p, buf, stagex_line, stagex_rd, stage7_line, stage7_line_loop);
   // Stage 8
-  HLSLIB_DATAFLOW_FUNCTION(write_mem, p, stage7_line, stage7_blk, image);
+  HLSLIB_DATAFLOW_FUNCTION(write_mem, p, stage7_line, stage7_blk, done, image);
 
   HLSLIB_DATAFLOW_FINALIZE();
 }

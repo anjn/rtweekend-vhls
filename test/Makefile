@@ -1,5 +1,6 @@
 .PHONY: csim
 csim:
+	rm -f out.ppm
 	@echo "set csim 1" > gen.tcl
 	@echo "set csynth 0" >> gen.tcl
 	@echo "source hls.tcl" >> gen.tcl

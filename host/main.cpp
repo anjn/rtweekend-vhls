@@ -24,9 +24,13 @@ int main(int argc, char **argv) {
 
   auto rt_kernel = cl::Kernel(program, "rt");
 
-  const int samples_per_pixel = 8;
-  const int image_width = 192;
-  const int image_height = 108;
+  //const int samples_per_pixel = 2;
+  //const int image_width = 64;
+  //const int image_height = 36;
+
+  const int samples_per_pixel = 2;
+  const int image_width = 480*4;
+  const int image_height = 270*4;
 
   host_buffer<uint32_t> host_image(image_width * image_height);
   cl::Memory device_image = make_device_buffer(context, CL_MEM_WRITE_ONLY, host_image);
@@ -62,9 +66,9 @@ int main(int argc, char **argv) {
   for (int y=image_height-1; y>=0; y--) {
     for (int x=0; x<image_width; x++) {
       auto rgb = host_image[image_width * y + x];
-      int ir = (rgb >>  0) & 0xff;
+      int ir = (rgb >> 16) & 0xff;
       int ig = (rgb >>  8) & 0xff;
-      int ib = (rgb >> 16) & 0xff;
+      int ib = (rgb >>  0) & 0xff;
       ofs << ir << ' ' << ig << ' ' << ib << '\n';
     }
   }
