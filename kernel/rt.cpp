@@ -156,6 +156,7 @@ void merge_pixel(
 void generate_ray(
   const render_info& p,
   pix_stream& pix_i,
+  done_stream& done_i,
   pix_ray_stream& ray_o
 ) {
   static xorshift32 rx(2463534242);
@@ -165,25 +166,31 @@ void generate_ray(
 
   camera cam;
 
-  for (uint32_t i=0; i<p.num_rays; i++) {
-//#pragma HLS PIPELINE
-    //auto [pos, pix] = pix_i.Pop();
-    pixel_position pos;
-    pixel_info pix;
-    std::tie(pos, pix) = pix_i.Pop();
+  while (true) {
+#pragma HLS PIPELINE
+    if (!pix_i.IsEmpty()) {
+      pixel_position pos;
+      pixel_info pix;
+      std::tie(pos, pix) = pix_i.Pop();
 
-    value_t rand_x = ((pos.x + p.start_x) << 16) + (rx.next() & ((1<<16)-1));
-    value_t rand_y = ((pos.y + p.start_y) << 16) + (ry.next() & ((1<<16)-1));
+      value_t rand_x = ((pos.x + p.start_x) << 16) + (rx.next() & ((1<<16)-1));
+      value_t rand_y = ((pos.y + p.start_y) << 16) + (ry.next() & ((1<<16)-1));
 
-    value_t u = rand_x / (p.image_w << 16);
-    value_t v = rand_y / (p.image_h << 16);
+      value_t u = rand_x / (p.image_w << 16);
+      value_t v = rand_y / (p.image_h << 16);
 
-    ray_info ri;
-    ri.r = cam.get_ray(u, v);
-    ri.attenuation = color(a, a, a);
-    ri.hit_count = 0;
+      ray_info ri;
+      ri.r = cam.get_ray(u, v);
+      ri.attenuation = color(a, a, a);
+      ri.hit_count = 0;
 
-    ray_o.Push({pos, pix, ri});
+      ray_o.Push({pos, pix, ri});
+    }
+
+    bool done;
+    if (done_i.ReadNonBlocking(done)) {
+      break;
+    }
   }
 }
 
@@ -250,7 +257,6 @@ hit_sphere_main:
     if (done_i.ReadNonBlocking(done)) {
       break;
     } else if (!ray_i.IsEmpty()) {
-
       bool hit;
       hit_record rec;
       {
@@ -305,35 +311,42 @@ hit_sphere_main:
 void light(
   const render_info& p,
   pix_ray_stream& ray_i,
+  done_stream& done_i,
   pix_stream& pix_o,
   pix_stream_fb& pix_loop_o
 ) {
-  for (int i=0; i<p.num_rays; i++) {
+  while (true) {
 #pragma HLS PIPELINE
-    pixel_position pos;
-    pixel_info pix;
-    ray_info ri;
-    std::tie(pos, pix, ri) = ray_i.Pop();
-    //auto [pos, pix, ri] = ray_i.Pop();
+    if (!ray_i.IsEmpty()) {
+      pixel_position pos;
+      pixel_info pix;
+      ray_info ri;
+      std::tie(pos, pix, ri) = ray_i.Pop();
 
-    color rc { 0, 0, 0 };
+      color rc { 0, 0, 0 };
 
-    if (ri.hit_count < MAX_HIT) {
-      vec3 unit_direction = unit_vector(ri.r.direction());
-      value_t t = value_t(0.5)*(unit_direction.y() + value_t(1.0));
-      rc = (value_t(1.0)-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
-      rc[0] *= ri.attenuation[0];
-      rc[1] *= ri.attenuation[1];
-      rc[2] *= ri.attenuation[2];
+      if (ri.hit_count < MAX_HIT) {
+        vec3 unit_direction = unit_vector(ri.r.direction());
+        value_t t = value_t(0.5)*(unit_direction.y() + value_t(1.0));
+        rc = (value_t(1.0)-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
+        rc[0] *= ri.attenuation[0];
+        rc[1] *= ri.attenuation[1];
+        rc[2] *= ri.attenuation[2];
+      }
+
+      pix.p += rc;
+      pix.sample_count++;
+
+      if (pix.sample_count == p.samples_per_pixel) {
+        pix_o.Push({pos, pix});
+      } else {
+        pix_loop_o.Push({pos, pix});
+      }
     }
 
-    pix.p += rc;
-    pix.sample_count++;
-
-    if (pix.sample_count == p.samples_per_pixel) {
-      pix_o.Push({pos, pix});
-    } else {
-      pix_loop_o.Push({pos, pix});
+    bool done;
+    if (done_i.ReadNonBlocking(done)) {
+      break;
     }
   }
 }
@@ -369,28 +382,37 @@ void buffer_write(
   const render_info& p,
   buffer_memory& buf,
   pix_stream& pix_i,
+  done_stream& done_i,
   buf_wr_req_stream& wr_o,
   line_stream& y_o
 ) {
 
 write:
-  for (int i=0; i<p.num_pixels; i++) {
-    pixel_position pos;
-    pixel_info pix;
-    std::tie(pos, pix) = pix_i.Pop();
+  while (true) {
+#pragma HLS PIPELINE
+    if (!pix_i.IsEmpty()) {
+      pixel_position pos;
+      pixel_info pix;
+      std::tie(pos, pix) = pix_i.Pop();
 
-    // Write to buffer
-    uint32_t buffer_y = pos.y & (MAX_BUFFER_HEIGHT - 1);
-    uint32_t index = (buffer_y << buf.buffer_w_clog2) | pos.x;
+      // Write to buffer
+      uint32_t buffer_y = pos.y & (MAX_BUFFER_HEIGHT - 1);
+      uint32_t index = (buffer_y << buf.buffer_w_clog2) | pos.x;
 
-    assert(index < buffer_memory::num_pixels);
-    uint8_t w[3];
-    w[0] = clamp(int(pix.p[0]), 0, 255);
-    w[1] = clamp(int(pix.p[1]), 0, 255);
-    w[2] = clamp(int(pix.p[2]), 0, 255);
-    wr_o.Push({index, w[0], w[1], w[2]});
+      assert(index < buffer_memory::num_pixels);
+      uint8_t w[3];
+      w[0] = clamp(int(pix.p[0]), 0, 255);
+      w[1] = clamp(int(pix.p[1]), 0, 255);
+      w[2] = clamp(int(pix.p[2]), 0, 255);
+      wr_o.Push({index, w[0], w[1], w[2]});
 
-    y_o.Push(pos.y);
+      y_o.Push(pos.y);
+    }
+
+    bool done;
+    if (done_i.ReadNonBlocking(done)) {
+      break;
+    }
   }
 }
 
@@ -437,7 +459,7 @@ void count_pixel(
   done_stream& done_i,
   line_stream& y_o
 ) {
-  const int latency = 8;
+  const int latency = 4;
   using y_shifter = shifter<uint16_t, latency+1>;
 
   y_shifter ys;
@@ -493,6 +515,43 @@ clear_counter:
     }
   }
 }
+
+//void count_pixel(
+//  const render_info& p,
+//  line_stream& y_i,
+//  done_stream& done_i,
+//  line_stream& y_o
+//) {
+//  uint16_t pixel_count[MAX_BUFFER_HEIGHT];
+//
+//clear_counter:
+//  for (uint16_t y=0; y<MAX_BUFFER_HEIGHT; y++) {
+//#pragma HLS PIPELINE
+//    pixel_count[y] = 0;
+//  }
+//
+//count:
+//  while (true) {
+//#pragma HLS PIPELINE
+//    if (!y_i.IsEmpty()) {
+//      auto y = y_i.Pop();
+//      uint32_t buffer_y = y & (MAX_BUFFER_HEIGHT - 1);
+//      uint16_t count = pixel_count[buffer_y] + 1;
+//
+//      if (count == p.render_w) {
+//        y_o.Push(y);
+//        count = 0;
+//      }
+//
+//      pixel_count[buffer_y] = count;
+//    }
+//
+//    bool done;
+//    if (done_i.ReadNonBlocking(done)) {
+//      break;
+//    }
+//  }
+//}
 
 void buffer(
   buf_wr_req_stream& wr_i,
@@ -576,6 +635,7 @@ read:
       y_loop_o.Push(next_y);
 
     for (int j=0; j<p.render_w/buffer_memory::num_urams; j++) {
+#pragma HLS PIPELINE
       uint32_t addr =  index + buffer_memory::num_urams * j;
       rd_req_o.Push(addr >> 4);
     }
@@ -598,11 +658,12 @@ void write_mem(
 #endif
 
     for (int x=0; x<p.render_w/block_w; x++) {
+#pragma HLS PIPELINE
       image[y * p.image_w/block_w + p.start_x/block_w + x] = blk_i.Pop();
     }
   }
 
-  for (int i=0; i<5; i++) {
+  for (int i=0; i<8; i++) {
 #pragma HLS UNROLL
     done_o[i].Push(true);
   }
@@ -672,7 +733,7 @@ void rt(
   INST_STREAM(buf_rd_req_stream,     stagex_rd);
   INST_STREAM(line_stream,           stagex_line);
 
-  done_stream done[5];
+  done_stream done[8];
 
   HLSLIB_DATAFLOW_INIT();
   // Stage 0
@@ -680,21 +741,22 @@ void rt(
   // Stage 1
   HLSLIB_DATAFLOW_FUNCTION(merge_pixel, stage0_pos, stage5_pix_loop, done[0], stage1_pix);
   // Stage 2
-  HLSLIB_DATAFLOW_FUNCTION(generate_ray, p, stage1_pix, stage2_ray);
+  HLSLIB_DATAFLOW_FUNCTION(generate_ray, p, stage1_pix, done[1], stage2_ray);
   // Stage 3
-  HLSLIB_DATAFLOW_FUNCTION(merge_hit, stage2_ray, stage4_ray_loop, done[1], stage3_ray, stage3_pix);
+  HLSLIB_DATAFLOW_FUNCTION(merge_hit, stage2_ray, stage4_ray_loop, done[2], stage3_ray, stage3_pix);
   // Stage 4
-  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, stage3_ray, stage3_pix, done[2], stage4_ray, stage4_ray_loop);
+  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, stage3_ray, stage3_pix, done[3], stage4_ray, stage4_ray_loop);
   // Stage 5
-  HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, stage5_pix, stage5_pix_loop);
+  HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, done[4], stage5_pix, stage5_pix_loop);
   // Stage 6
-  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, buf, stage5_pix, stagex_wr, stage6_line);
-
-  HLSLIB_DATAFLOW_FUNCTION(buffer, stagex_wr, stagex_rd, done[3], stage7_blk);
-  HLSLIB_DATAFLOW_FUNCTION(count_pixel, p, stage6_line, done[4], stagex_line);
+  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, buf, stage5_pix, done[5], stagex_wr, stage6_line);
   // Stage 7
-  HLSLIB_DATAFLOW_FUNCTION(buffer_read, p, buf, stagex_line, stagex_rd, stage7_line, stage7_line_loop);
+  HLSLIB_DATAFLOW_FUNCTION(buffer, stagex_wr, stagex_rd, done[6], stage7_blk);
   // Stage 8
+  HLSLIB_DATAFLOW_FUNCTION(count_pixel, p, stage6_line, done[7], stagex_line);
+  // Stage 9
+  HLSLIB_DATAFLOW_FUNCTION(buffer_read, p, buf, stagex_line, stagex_rd, stage7_line, stage7_line_loop);
+  // Stage 10
   HLSLIB_DATAFLOW_FUNCTION(write_mem, p, stage7_line, stage7_blk, done, image);
 
   HLSLIB_DATAFLOW_FINALIZE();
