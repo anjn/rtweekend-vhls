@@ -4,6 +4,8 @@ objects := ocl_common xcl2
 include_dirs := host kernel
 bin_dir := .
 
+#CXX := g++
+#CXXFLAGS += -std=c++17
 LDFLAGS += -lxrt_core -pthread -luuid -lxilinxopencl
 
 vpath %.cpp host kernel

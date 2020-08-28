@@ -2,7 +2,7 @@
 
 #include "ray.hpp"
 
-const int MAX_OBJECTS = 2;
+const int MAX_OBJECTS = 4;
 
 struct hit_record
 {
@@ -29,6 +29,11 @@ struct hittable
     valid = true;
     center = c;
     radius = r;
+  }
+
+  void clear() {
+#pragma HLS INLINE
+    valid = false;
   }
 
   bool hit_sphere(const ray& r, value_t t_min, value_t t_max, hit_record& rec) const {
