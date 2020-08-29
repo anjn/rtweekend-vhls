@@ -318,7 +318,7 @@ hit_sphere_main:
           } else if (mat.type == 1) {
             // Metal
             vec3 reflected = reflect(unit_vector(ri.r.dir), rec.normal);
-            scattered = ray(rec.p, reflected * mat.fuzz * rs_v);
+            scattered = ray(rec.p, reflected + mat.fuzz * rs_v);
             scatter = dot(scattered.dir, rec.normal) > 0;
           }
 //          else {
