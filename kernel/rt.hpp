@@ -2,6 +2,8 @@
 #include <array>
 #include <stdint.h>
 
+#include "object.hpp"
+
 template<typename T>
 struct pixel
 {
@@ -9,14 +11,6 @@ struct pixel
   T g;
   T r;
   T a;
-};
-
-struct object
-{
-  float center_x;
-  float center_y;
-  float center_z;
-  float radius;
 };
 
 constexpr int pixel_block_size = 4;

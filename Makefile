@@ -6,6 +6,7 @@ bin_dir := .
 
 #CXX := g++
 #CXXFLAGS += -std=c++17
+CXXFLAGS += -DOPENCL
 LDFLAGS += -lxrt_core -pthread -luuid -lxilinxopencl
 
 vpath %.cpp host kernel

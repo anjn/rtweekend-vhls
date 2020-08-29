@@ -2,8 +2,7 @@
 
 #include "vec3.hpp"
 
-class ray {
-public:
+struct ray {
   ray() {}
   ray(const point3& origin, const vec3& direction)
     : orig(origin), dir(direction)
@@ -16,7 +15,6 @@ public:
     return orig + t*dir;
   }
 
-public:
   point3 orig;
   vec3 dir;
 };

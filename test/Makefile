@@ -2,20 +2,22 @@
 csim:
 	rm -f out.ppm
 	@echo "set csim 1" > gen.tcl
-	@echo "set csynth 0" >> gen.tcl
+	@echo "set csyn 0" >> gen.tcl
 	@echo "source hls.tcl" >> gen.tcl
 	@AP_GCC_PATH=/usr/bin vitis_hls -f gen.tcl
 	@gnome-open out.ppm
 
-.PHONY: csynth
-csynth:
+.PHONY: csyn
+csyn:
 	@echo "set csim 0" > gen.tcl
-	@echo "set csynth 1" >> gen.tcl
+	@echo "set csyn 1" >> gen.tcl
 	@echo "source hls.tcl" >> gen.tcl
 	@vitis_hls -f gen.tcl \
 		| sed -ru "s/^WARNING.*\$$/\o033[1;33m\0\o033[0m/g" \
 		| sed -ru "s/^ERROR.*\$$/\o033[1;31m\0\o033[0m/g" \
-		| sed -ru "s/^.*Final II.*\$$/\o033[1;34m\0\o033[0m/g"
+		| sed -ru "s/^.*Unable to pipeline.*\$$/\o033[1;31m\0\o033[0m/g" \
+		| sed -ru "s/^.*Final II.*\$$/\o033[1;34m\0\o033[0m/g" \
+		| sed -ru "s/^.*Inferring multiple bus burst.*\$$/\o033[1;34m\0\o033[0m/g"
 
 .PHONY: compile
 compile:

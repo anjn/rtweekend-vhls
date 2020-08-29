@@ -31,6 +31,7 @@ struct render_info
   uint16_t end_y;
   uint16_t samples_per_pixel;
   float    output_ratio;
+  uint16_t num_objects;
 
   uint16_t render_w;
   uint16_t render_h;
@@ -51,6 +52,7 @@ struct hit_info
   hit_record rec;
   bool hit_anything;
   value_t closest_so_far;
+  uint8_t hit_obj_index;
 };
 
 void init(hit_info& hi) {
@@ -70,14 +72,6 @@ struct pixel_info
 {
   color p;
   uint16_t sample_count;
-};
-
-struct object_info
-{
-  point3 center;
-  value_t radius;
-  color albedo;
-  value_t fuzz;
 };
 
 // Stream types
@@ -256,7 +250,7 @@ void merge_hit(
 
 void hit_sphere(
   const render_info& p,
-  const hittable_list& world,
+  object* objects,
   ray_hit_stream& ray_i,
   pix_ray_hit_stream_fb& pix_i,
   done_stream& done_i,
@@ -264,6 +258,16 @@ void hit_sphere(
   pix_ray_hit_stream_fb& ray_loop_o
 ) {
   static random_in_unit_sphere rs;
+  //static random_unit_vector rs;
+
+  hittable_list world;
+  for (int i=0; i<MAX_OBJECTS; i++) {
+    if (i < p.num_objects) {
+      world.objects[i].set(objects[i]);
+    } else {
+      world.objects[i].clear();
+    }
+  }
 
 hit_sphere_main:
   while (true)
@@ -290,6 +294,7 @@ hit_sphere_main:
         hi.hit_anything = true;
         hi.closest_so_far = rec.t;
         hi.rec = rec;
+        hi.hit_obj_index = hi.object_index;
       }
 
       auto rs_v = rs.next();
@@ -299,11 +304,49 @@ hit_sphere_main:
         loop = false;
 
         if (hi.hit_anything) {
+          const auto& obj = world.objects[hi.hit_obj_index].obj;
+          const auto& mat = obj.m;
+          const auto& rec = hi.rec;
           // Create new ray
-          ri.r = ray(hi.rec.p, hi.rec.normal + rs_v);
-          ri.attenuation *= 0.5;
-          if (ri.hit_count < MAX_HIT) loop = true;
-          ri.hit_count++;
+          ray scattered;
+          bool scatter;
+          if (mat.type == 0) {
+            // Lambertian
+            auto scatter_direction = rec.normal + rs_v;
+            scattered = ray(rec.p, scatter_direction);
+            scatter = true;
+          } else if (mat.type == 1) {
+            // Metal
+            vec3 reflected = reflect(unit_vector(ri.r.dir), rec.normal);
+            scattered = ray(rec.p, reflected * mat.fuzz * rs_v);
+            scatter = dot(scattered.dir, rec.normal) > 0;
+          }
+//          else {
+//            // Dielectric
+//            float etai_over_etat = rec.front_face ? mat.ref_idx_inv : mat.ref_idx;
+//            float r0 = rec.front_face ? mat.r0_inv : mat.r0;
+//            vec3 unit_direction = unit_vector(ri.r.dir);
+//
+//            float cos_theta = hls::fmin(dot(-unit_direction, rec.normal), 1.0f);
+//            float sin_theta = hls::sqrt(1.0 - cos_theta * cos_theta);
+//            float reflect_prob = schlick(cos_theta, r0);
+//            if (etai_over_etat * sin_theta > 1.0 || rs.ru.raw_float < reflect_prob) {
+//              vec3 reflected = reflect(unit_direction, rec.normal);
+//              scattered = ray(rec.p, reflected);
+//            } else {
+//              vec3 refracted = refract(unit_direction, rec.normal, etai_over_etat);
+//              scattered = ray(rec.p, refracted);
+//            }
+//            scatter = true;
+//          }
+          if (scatter) {
+            ri.r = scattered;
+            ri.attenuation = ri.attenuation * mat.albedo;
+            if (ri.hit_count < MAX_HIT) loop = true;
+            ri.hit_count++;
+          } else {
+            ri.attenuation = color(0,0,0);
+          }
           // Reset hit_info
           init(hi);
         }
@@ -573,8 +616,8 @@ void rt(
   object* objects,
   pixel_block* image
 ) {
-#pragma HLS INTERFACE m_axi port=objects offset=slave bundle=gmem
-#pragma HLS INTERFACE m_axi port=image offset=slave bundle=gmem
+#pragma HLS INTERFACE m_axi port=objects offset=slave bundle=gmem0
+#pragma HLS INTERFACE m_axi port=image offset=slave bundle=gmem1
 #pragma HLS INTERFACE s_axilite port=image_w
 #pragma HLS INTERFACE s_axilite port=image_h
 #pragma HLS INTERFACE s_axilite port=start_x
@@ -584,6 +627,7 @@ void rt(
 #pragma HLS INTERFACE s_axilite port=samples_per_pixel
 #pragma HLS INTERFACE s_axilite port=output_ratio
 #pragma HLS INTERFACE s_axilite port=num_objects
+#pragma HLS INTERFACE s_axilite port=objects
 #pragma HLS INTERFACE s_axilite port=image
 #pragma HLS INTERFACE s_axilite port=return
 #pragma HLS INTERFACE ap_ctrl_hs port=return
@@ -601,25 +645,12 @@ void rt(
   p.end_y = end_y;
   p.samples_per_pixel = samples_per_pixel;
   p.output_ratio = output_ratio;
+  p.num_objects = num_objects;
 
   p.render_w = end_x - start_x;
   p.render_h = end_y - start_y;
   p.num_pixels = p.render_w * p.render_h;
   p.num_rays = p.num_pixels * samples_per_pixel;
-
-  hittable_list world;
-  //world.objects[0].set(point3(0,0,-1), 0.5);
-  //world.objects[1].set(point3(0,-100.5,-1), 100);
-  //world.objects[2].set(point3(1,0,-1), 0.3);
-  //world.objects[3].clear();
-  for (int i=0; i<MAX_OBJECTS; i++) {
-    if (i < num_objects) {
-      auto obj = objects[i];
-      world.objects[i].set(point3(obj.center_x, obj.center_y, obj.center_z), obj.radius);
-    } else {
-      world.objects[i].clear();
-    }
-  }
 
 #define INST_STREAM(type, name) type name(#name)
 
@@ -652,7 +683,7 @@ void rt(
   // Stage 3
   HLSLIB_DATAFLOW_FUNCTION(merge_hit, stage2_ray, stage4_ray_loop, done[2], stage3_ray, stage3_pix);
   // Stage 4
-  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, world, stage3_ray, stage3_pix, done[3], stage4_ray, stage4_ray_loop);
+  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p, objects, stage3_ray, stage3_pix, done[3], stage4_ray, stage4_ray_loop);
   // Stage 5
   HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, done[4], stage5_pix, stage5_pix_loop);
   // Stage 6
