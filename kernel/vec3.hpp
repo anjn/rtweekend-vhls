@@ -5,9 +5,6 @@
 
 #include "random.hpp"
 
-//using value_t = ap_fixed<32,16>;
-//using value_t = ap_fixed<64,32>;
-//using value_t = double;
 using value_t = float;
 
 // Constants
@@ -132,9 +129,52 @@ inline vec3 unit_vector(vec3 v) {
   return len == 0 ? v : v / len;
 }
 
+inline vec3 reflect(const vec3& v, const vec3& n) {
+  return v - 2 * dot(v, n) * n;
+}
+
+inline vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
+  auto cos_theta = dot(-uv, n);
+  vec3 r_out_perp =  etai_over_etat * (uv + cos_theta*n);
+  vec3 r_out_parallel = -hls::sqrt(fabs(1.0 - r_out_perp.length_squared())) * n;
+  return r_out_perp + r_out_parallel;
+}
+
+inline float schlick(float cosine, float r0) {
+  return r0 + (1-r0) * hls::pow((1.0f - cosine), 5.0f);
+}
+
+struct random_uniform
+{
+  xorshift32 r;
+  uint32_t raw;
+  float raw_float;
+
+  random_uniform(uint32_t seed): r(seed) {}
+
+  float next() {
+#pragma HLS INLINE
+    raw = r.next();
+    raw_float = float(raw) * xorshift32::max_float_inv;
+    return raw_float;
+  }
+
+  float next(float max) {
+#pragma HLS INLINE
+    return next() * max;
+  }
+
+  float next(float min, float max) {
+#pragma HLS INLINE
+    return next(max - min) + min;
+  }
+};
+
 struct random_in_unit_sphere
 {
-  xorshift32 ru, rv, rw;
+  random_uniform ru;
+  random_uniform rv;
+  random_uniform rw;
 
   random_in_unit_sphere():
     ru(12345),
@@ -145,13 +185,31 @@ struct random_in_unit_sphere
   vec3 next() {
 #pragma HLS INLINE
     vec3 vec;
-    value_t u = random_norm<value_t>::gen(ru);
-    value_t v = random_norm<value_t>::gen(rv);
-    value_t w = hls::pow(random_norm<value_t>::gen(rw), value_t(1.0/3.0));
+    value_t u = ru.next();
+    value_t v = rv.next();
+    value_t w = hls::pow(rw.next(), value_t(1.0/3.0));
     vec[0] = w * (1 - 2 * u);
     value_t z = hls::sqrt(1 - vec[0] * vec[0]);
     vec[1] = w * z * hls::cos(2 * pi * v);
     vec[2] = w * z * hls::sin(2 * pi * v);
     return vec;
+  }
+};
+
+struct random_unit_vector
+{
+  xorshift32 ra, rz;
+
+  random_unit_vector():
+    ra(22222),
+    rz(22223)
+  {}
+
+  vec3 next() {
+#pragma HLS INLINE
+    auto a = random_norm<value_t>::gen(ra, 0, 2*pi);
+    auto z = random_norm<value_t>::gen(rz, -1, 1);
+    auto r = hls::sqrt(1 - z*z);
+    return vec3(r * hls::cos(a), r * hls::sin(a), z);
   }
 };

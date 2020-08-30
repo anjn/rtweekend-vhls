@@ -1,6 +1,6 @@
 # Host
-CXX := $(XILINX_VITIS)/bin/xcpp
-CXXFLAGS += -I$(XILINX_XRT)/include -Wall -fmessage-length=0 -std=c++14
+CXX ?= $(XILINX_VITIS)/bin/xcpp
+CXXFLAGS += -I$(XILINX_XRT)/include -Wall -fmessage-length=0 -std=c++17
 CXXFLAGS += -Wno-unknown-pragmas -Wno-unused-label
 LDFLAGS += -L$(XILINX_XRT)/lib -lOpenCL -lrt -lstdc++
 

@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ray.hpp"
+#include "object.hpp"
 
-const int MAX_OBJECTS = 2;
+const int MAX_OBJECTS = 8;
 
 struct hit_record
 {
@@ -20,23 +21,25 @@ struct hit_record
 struct hittable
 {
   bool valid;
+  object obj;
 
-  point3 center;
-  value_t radius;
-
-  void set(const point3& c, value_t r) {
+  void set(const object& o) {
 #pragma HLS INLINE
     valid = true;
-    center = c;
-    radius = r;
+    obj = o;
+  }
+
+  void clear() {
+#pragma HLS INLINE
+    valid = false;
   }
 
   bool hit_sphere(const ray& r, value_t t_min, value_t t_max, hit_record& rec) const {
 #pragma HLS INLINE
-    vec3 oc = r.origin() - center;
+    vec3 oc = r.origin() - obj.center;
     value_t a = r.direction().length_squared();
     value_t half_b = dot(oc, r.direction());
-    value_t c = oc.length_squared() - radius*radius;
+    value_t c = oc.length_squared() - obj.radius*obj.radius;
     value_t discriminant = half_b*half_b - a*c;
 
     if (discriminant > 0) {
@@ -45,7 +48,7 @@ struct hittable
       if (temp < t_max && temp > t_min) {
         rec.t = temp;
         rec.p = r.at(rec.t);
-        vec3 outward_normal = (rec.p - center) / radius;
+        vec3 outward_normal = (rec.p - obj.center) / obj.radius;
         rec.set_face_normal(r, outward_normal);
         return true;
       }
@@ -53,7 +56,7 @@ struct hittable
       if (temp < t_max && temp > t_min) {
         rec.t = temp;
         rec.p = r.at(rec.t);
-        vec3 outward_normal = (rec.p - center) / radius;
+        vec3 outward_normal = (rec.p - obj.center) / obj.radius;
         rec.set_face_normal(r, outward_normal);
         return true;
       }
@@ -72,6 +75,8 @@ struct hittable_list
   hittable objects[MAX_OBJECTS];
 
   hittable_list() {
+#pragma HLS INLINE
+#pragma HLS ARRAY_PARTITION variable=objects complete
   }
 
   bool hit(const ray& r, value_t t_min, value_t t_max, hit_record& rec) const {

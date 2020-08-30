@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "ocl_common.h"
+#include "object.hpp"
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -24,17 +25,32 @@ int main(int argc, char **argv) {
 
   auto rt_kernel = cl::Kernel(program, "rt");
 
-  // For hw_emu
-  const int samples_per_pixel = 2;
-  const int image_width = 64;
-  const int image_height = 36;
+  //const int samples_per_pixel = 2;
+  //const int image_width = 64;
+  //const int image_height = 36;
 
-  host_buffer<uint32_t> host_image(image_width * image_height);
-  cl::Memory device_image = make_device_buffer(context, CL_MEM_WRITE_ONLY, host_image);
+  const int samples_per_pixel = 256;
+  const int image_width = 1920;
+  const int image_height = 1080;
+
+  host_buffer<float> host_image(image_width * image_height * 4);
+  cl::Memory device_image = make_device_buffer(context, CL_MEM_READ_WRITE, host_image);
+
+  host_buffer<object> host_objects;
+
+  host_objects.push_back(make_sphere({ 0.0,    0.0, -1.2}, 0.5, make_metal     ({1.0, 1.0, 1.0}, 0.0)));
+  host_objects.push_back(make_sphere({ 0.0, -100.5, -1.0}, 100, make_lambertian({0.8, 0.8, 0.3}     )));
+  host_objects.push_back(make_sphere({-1.0,   -0.1, -1.0}, 0.4, make_metal     ({1.0, 0.8, 0.8}, 0.1)));
+  host_objects.push_back(make_sphere({-0.5,   -0.4, -0.5}, 0.1, make_lambertian({0.3, 0.8, 0.3}     )));
+  host_objects.push_back(make_sphere({ 1.0,   -0.2, -1.0}, 0.3, make_lambertian({0.3, 0.3, 0.8}     )));
+  host_objects.push_back(make_sphere({ 0.4,   -0.4, -0.7}, 0.1, make_lambertian({0.9, 0.8, 0.1}     )));
+  host_objects.push_back(make_sphere({ 0.1,   -0.4, -0.6}, 0.1, make_lambertian({0.9, 0.1, 0.1}     )));
+
+  cl::Memory device_objects = make_device_buffer(context, CL_MEM_READ_ONLY, host_objects);
 
   std::vector<cl::Event> events;
 
-  auto render = [&](int sx, int sy, int ex, int ey) {
+  auto render = [&](int sx, int sy, int ex, int ey, float ratio, std::vector<cl::Event> e_depends) {
     int arg = 0;
     rt_kernel.setArg(arg++, image_width);
     rt_kernel.setArg(arg++, image_height);
@@ -43,16 +59,26 @@ int main(int argc, char **argv) {
     rt_kernel.setArg(arg++, ex);
     rt_kernel.setArg(arg++, ey);
     rt_kernel.setArg(arg++, samples_per_pixel);
+    rt_kernel.setArg(arg++, ratio);
+    rt_kernel.setArg(arg++, int(host_objects.size()));
+    rt_kernel.setArg(arg++, device_objects);
     rt_kernel.setArg(arg++, device_image);
 
     cl::Event e;
-    q.enqueueTask(rt_kernel, nullptr, &e);
+    q.enqueueTask(rt_kernel, &e_depends, &e);
     events.push_back(e);
   };
 
-  //render(0, 0, image_width/2, image_height/2);
-  //render(image_width/2, image_height/2, image_width, image_height);
-  render(0, 0, image_width, image_height);
+  cl::Event e_mem_wr;
+  q.enqueueMigrateMemObjects({device_image, device_objects}, 0, nullptr, &e_mem_wr);
+
+  for (int i=0; i<1; i++) {
+    int sx = image_width / 1 * (i + 0);
+    int ex = image_width / 1 * (i + 1);
+    render(sx, 0, ex, image_height, 1.0f, {e_mem_wr});
+  }
+  //render(0, 0, image_width, image_height, 1.0f, {e_mem_wr});
+  //render(0, 0, image_width, image_height, 0.5f, {e_mem_wr});
 
   q.enqueueMigrateMemObjects({device_image}, CL_MIGRATE_MEM_OBJECT_HOST, &events);
   q.finish();
@@ -62,18 +88,18 @@ int main(int argc, char **argv) {
   ofs << "P3\n" << image_width << ' ' << image_height << "\n255\n";
   for (int y=image_height-1; y>=0; y--) {
     for (int x=0; x<image_width; x++) {
-      auto rgb = host_image[image_width * y + x];
-      int ir = (rgb >>  0) & 0xff;
-      int ig = (rgb >>  8) & 0xff;
-      int ib = (rgb >> 16) & 0xff;
+      auto rgb = &host_image[(image_width * y + x) * 4];
+      int ir = std::clamp(int(rgb[2]), 0, 255);
+      int ig = std::clamp(int(rgb[1]), 0, 255);
+      int ib = std::clamp(int(rgb[0]), 0, 255);
       ofs << ir << ' ' << ig << ' ' << ib << '\n';
     }
   }
 
-  device_image = cl::Memory();
-  rt_kernel = cl::Kernel();
-  q = cl::CommandQueue();
-  program = cl::Program();
-  context = cl::Context();
-  device = cl::Device();
+  //device_image = cl::Memory();
+  //rt_kernel = cl::Kernel();
+  //q = cl::CommandQueue();
+  //program = cl::Program();
+  //context = cl::Context();
+  //device = cl::Device();
 }

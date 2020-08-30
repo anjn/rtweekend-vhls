@@ -2,23 +2,20 @@
 #include <array>
 #include <stdint.h>
 
-#include "ap_int.h"
+#include "object.hpp"
 
-constexpr auto aspect_ratio = 16.0 / 9.0;
-constexpr int SIM_WIDTH  = 384;
-constexpr int SIM_HEIGHT = static_cast<int>(SIM_WIDTH / aspect_ratio);
-
+template<typename T>
 struct pixel
 {
-  uint8_t b;
-  uint8_t g;
-  uint8_t r;
-  uint8_t a;
+  T b;
+  T g;
+  T r;
+  T a;
 };
 
-constexpr int output_block_width = 16;
-
-using pixel_block = std::array<pixel, output_block_width>;
+constexpr int pixel_block_size = 4;
+using pixel_type = float;
+using pixel_block = std::array<pixel<pixel_type>, pixel_block_size>;
 
 void rt(
   const int image_w,
@@ -28,6 +25,9 @@ void rt(
   const int end_x,
   const int end_y,
   const int samples_per_pixel,
+  const float output_ratio,
+  const int num_objects,
+  object* objects,
   pixel_block* image
 );
 

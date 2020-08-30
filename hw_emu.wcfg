@@ -1,0 +1,2166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="xilinx_u200_xdma_201830_2-0-rt.hw_emu.xilinx_u200_xdma_201830_2.wdb" id="1">
+         <top_modules>
+            <top_module name="\$unit_emu_dpa_hub_0_stub_sv " />
+            <top_module name="\$unit_emu_icn_pass_3_0_stub_sv " />
+            <top_module name="\$unit_emu_sim_ddr_1_0_stub_sv " />
+            <top_module name="\$unit_emu_sim_embedded_scheduler_sw_0_0_stub_sv " />
+            <top_module name="\$unit_emu_xtlm_simple_intercon_0_0_stub_sv " />
+            <top_module name="emu_wrapper" />
+            <top_module name="glbl" />
+            <top_module name="ipif_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="14659137fs"></ZoomStartTime>
+      <ZoomEndTime time="25814138fs"></ZoomEndTime>
+      <Cursor1Time time="16518303fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="352"></NameColumnWidth>
+      <ValueColumnWidth column_width="213"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="14" />
+   <wvobject type="group" fp_name="HLS_Process_Summary_group">
+      <obj_property name="label">HLS Process Summary</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/">
+         <obj_property name="label">/emu_wrapper/emu_i/rt/inst/</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="group" fp_name="hit_sphere_U0">
+            <obj_property name="label">hit_sphere_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/hit_sphere_U0">
+               <obj_property name="label">hit_sphere_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">hit_sphere_U0</obj_property>
+               <obj_property name="ObjectShortName">hit_sphere_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/hit_sphere_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/hit_sphere_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/hit_sphere_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+            <wvobject type="group" fp_name="grp_pow_generic_float_s_fu_617">
+               <obj_property name="label">grp_pow_generic_float_s_fu_617</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="isExpanded"></obj_property>
+               <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_pow_generic_float_s_fu_617/grp_pow_generic_float_s_fu_617">
+                  <obj_property name="label">grp_pow_generic_float_s_fu_617</obj_property>
+                  <obj_property name="DisplayName">label</obj_property>
+                  <obj_property name="UseFullPath">true</obj_property>
+                  <obj_property name="ElementShortName">grp_pow_generic_float_s_fu_617</obj_property>
+                  <obj_property name="ObjectShortName">grp_pow_generic_float_s_fu_617</obj_property>
+                  <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+                  <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                  <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
+                  <obj_property name="CustomSignalColor">turquoise</obj_property>
+                  <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+                  <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_pow_generic_float_s_fu_617/grp_pow_generic_float_s_fu_617.dataflowTxWaveData.Cycles</obj_property>
+                  <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_pow_generic_float_s_fu_617/grp_pow_generic_float_s_fu_617.dataflowTxWaveData.OutStanding</obj_property>
+                  <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_pow_generic_float_s_fu_617/grp_pow_generic_float_s_fu_617.dataflowTxTooltipData</obj_property>
+               </wvobject>
+            </wvobject>
+            <wvobject type="group" fp_name="grp_sin_or_cos_float_s_fu_636">
+               <obj_property name="label">grp_sin_or_cos_float_s_fu_636</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="isExpanded"></obj_property>
+               <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_636/grp_sin_or_cos_float_s_fu_636">
+                  <obj_property name="label">grp_sin_or_cos_float_s_fu_636</obj_property>
+                  <obj_property name="DisplayName">label</obj_property>
+                  <obj_property name="UseFullPath">true</obj_property>
+                  <obj_property name="ElementShortName">grp_sin_or_cos_float_s_fu_636</obj_property>
+                  <obj_property name="ObjectShortName">grp_sin_or_cos_float_s_fu_636</obj_property>
+                  <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+                  <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                  <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
+                  <obj_property name="CustomSignalColor">turquoise</obj_property>
+                  <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+                  <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_636/grp_sin_or_cos_float_s_fu_636.dataflowTxWaveData.Cycles</obj_property>
+                  <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_636/grp_sin_or_cos_float_s_fu_636.dataflowTxWaveData.OutStanding</obj_property>
+                  <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_636/grp_sin_or_cos_float_s_fu_636.dataflowTxTooltipData</obj_property>
+               </wvobject>
+            </wvobject>
+            <wvobject type="group" fp_name="grp_sin_or_cos_float_s_fu_651">
+               <obj_property name="label">grp_sin_or_cos_float_s_fu_651</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="isExpanded"></obj_property>
+               <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_651/grp_sin_or_cos_float_s_fu_651">
+                  <obj_property name="label">grp_sin_or_cos_float_s_fu_651</obj_property>
+                  <obj_property name="DisplayName">label</obj_property>
+                  <obj_property name="UseFullPath">true</obj_property>
+                  <obj_property name="ElementShortName">grp_sin_or_cos_float_s_fu_651</obj_property>
+                  <obj_property name="ObjectShortName">grp_sin_or_cos_float_s_fu_651</obj_property>
+                  <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+                  <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                  <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
+                  <obj_property name="CustomSignalColor">turquoise</obj_property>
+                  <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+                  <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_651/grp_sin_or_cos_float_s_fu_651.dataflowTxWaveData.Cycles</obj_property>
+                  <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_651/grp_sin_or_cos_float_s_fu_651.dataflowTxWaveData.OutStanding</obj_property>
+                  <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_651/grp_sin_or_cos_float_s_fu_651.dataflowTxTooltipData</obj_property>
+               </wvobject>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="light_U0">
+            <obj_property name="label">light_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/light_U0/light_U0">
+               <obj_property name="label">light_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">light_U0</obj_property>
+               <obj_property name="ObjectShortName">light_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/light_U0/light_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/light_U0/light_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/light_U0/light_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="generate_ray_U0">
+            <obj_property name="label">generate_ray_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/generate_ray_U0/generate_ray_U0">
+               <obj_property name="label">generate_ray_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">generate_ray_U0</obj_property>
+               <obj_property name="ObjectShortName">generate_ray_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/generate_ray_U0/generate_ray_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/generate_ray_U0/generate_ray_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/generate_ray_U0/generate_ray_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="buffer_U0">
+            <obj_property name="label">buffer_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/buffer_U0/buffer_U0">
+               <obj_property name="label">buffer_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">buffer_U0</obj_property>
+               <obj_property name="ObjectShortName">buffer_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/buffer_U0/buffer_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/buffer_U0/buffer_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/buffer_U0/buffer_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="buffer_write_U0">
+            <obj_property name="label">buffer_write_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/buffer_write_U0/buffer_write_U0">
+               <obj_property name="label">buffer_write_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">buffer_write_U0</obj_property>
+               <obj_property name="ObjectShortName">buffer_write_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/buffer_write_U0/buffer_write_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/buffer_write_U0/buffer_write_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/buffer_write_U0/buffer_write_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="merge_hit_U0">
+            <obj_property name="label">merge_hit_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/merge_hit_U0/merge_hit_U0">
+               <obj_property name="label">merge_hit_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">merge_hit_U0</obj_property>
+               <obj_property name="ObjectShortName">merge_hit_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/merge_hit_U0/merge_hit_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/merge_hit_U0/merge_hit_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/merge_hit_U0/merge_hit_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="write_mem_U0">
+            <obj_property name="label">write_mem_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/write_mem_U0/write_mem_U0">
+               <obj_property name="label">write_mem_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">write_mem_U0</obj_property>
+               <obj_property name="ObjectShortName">write_mem_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/write_mem_U0/write_mem_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/write_mem_U0/write_mem_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/write_mem_U0/write_mem_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="Block_split70_proc79_U0">
+            <obj_property name="label">Block_split70_proc79_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/Block_split70_proc79_U0/Block_split70_proc79_U0">
+               <obj_property name="label">Block_split70_proc79_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">Block_split70_proc79_U0</obj_property>
+               <obj_property name="ObjectShortName">Block_split70_proc79_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/Block_split70_proc79_U0/Block_split70_proc79_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/Block_split70_proc79_U0/Block_split70_proc79_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/Block_split70_proc79_U0/Block_split70_proc79_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="buffer_read_U0">
+            <obj_property name="label">buffer_read_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/buffer_read_U0/buffer_read_U0">
+               <obj_property name="label">buffer_read_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">buffer_read_U0</obj_property>
+               <obj_property name="ObjectShortName">buffer_read_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/buffer_read_U0/buffer_read_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/buffer_read_U0/buffer_read_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/buffer_read_U0/buffer_read_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="merge_pixel_U0">
+            <obj_property name="label">merge_pixel_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/merge_pixel_U0/merge_pixel_U0">
+               <obj_property name="label">merge_pixel_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">merge_pixel_U0</obj_property>
+               <obj_property name="ObjectShortName">merge_pixel_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/merge_pixel_U0/merge_pixel_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/merge_pixel_U0/merge_pixel_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/merge_pixel_U0/merge_pixel_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="generate_pixel_U0">
+            <obj_property name="label">generate_pixel_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/generate_pixel_U0/generate_pixel_U0">
+               <obj_property name="label">generate_pixel_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">generate_pixel_U0</obj_property>
+               <obj_property name="ObjectShortName">generate_pixel_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/generate_pixel_U0/generate_pixel_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/generate_pixel_U0/generate_pixel_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/generate_pixel_U0/generate_pixel_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="count_pixel_U0">
+            <obj_property name="label">count_pixel_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/count_pixel_U0/count_pixel_U0">
+               <obj_property name="label">count_pixel_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">count_pixel_U0</obj_property>
+               <obj_property name="ObjectShortName">count_pixel_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/count_pixel_U0/count_pixel_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/count_pixel_U0/count_pixel_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/count_pixel_U0/count_pixel_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="Loop_VITIS_LOOP_395_1_proc_U0">
+            <obj_property name="label">Loop_VITIS_LOOP_395_1_proc_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/Loop_VITIS_LOOP_395_1_proc_U0/Loop_VITIS_LOOP_395_1_proc_U0">
+               <obj_property name="label">Loop_VITIS_LOOP_395_1_proc_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">Loop_VITIS_LOOP_395_1_proc_U0</obj_property>
+               <obj_property name="ObjectShortName">Loop_VITIS_LOOP_395_1_proc_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/Loop_VITIS_LOOP_395_1_proc_U0/Loop_VITIS_LOOP_395_1_proc_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/Loop_VITIS_LOOP_395_1_proc_U0/Loop_VITIS_LOOP_395_1_proc_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/Loop_VITIS_LOOP_395_1_proc_U0/Loop_VITIS_LOOP_395_1_proc_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0">
+            <obj_property name="label">Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="/emu_wrapper/emu_i/rt/inst/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0">
+               <obj_property name="label">Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="UseFullPath">true</obj_property>
+               <obj_property name="ElementShortName">Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0</obj_property>
+               <obj_property name="ObjectShortName">Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank ffff=blank 0bad=#FF0000</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="CustomSignalColor">turquoise</obj_property>
+               <obj_property name="EnumTransactionValueTable">65535=blank</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0.dataflowTxWaveData.Cycles</obj_property>
+               <obj_property name="Value_Data">/emu_wrapper/emu_i/rt/inst/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0.dataflowTxWaveData.OutStanding</obj_property>
+               <obj_property name="Detail_Data">/emu_wrapper/emu_i/rt/inst/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0.dataflowTxTooltipData</obj_property>
+            </wvobject>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="device_group">
+      <obj_property name="label">Device &quot;xilinx_u200_xdma_201830_2-0&quot;</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="group" fp_name="bin_group">
+         <obj_property name="label">Binary Container &quot;rt.hw_emu.xilinx_u200_xdma_201830_2&quot;</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="group" fp_name="kernel_group">
+            <obj_property name="label">Kernel &quot;rt&quot; 1:1:1</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="group" fp_name="cu_group">
+               <obj_property name="label">Compute Unit: rt</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="isExpanded"></obj_property>
+               <obj_property name="Description_Data">Activity for compute unit rt</obj_property>
+               <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+               <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+               <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/ap_idle</obj_property>
+               <wvobject type="vbus" fp_name="stall_vbus">
+                  <obj_property name="label">CU Stalls (%)</obj_property>
+                  <obj_property name="DisplayName">label</obj_property>
+                  <obj_property name="Description_Data">CU Functions that are stalling (%)</obj_property>
+                  <obj_property name="Radix">BITCOUNTRADIX</obj_property>
+                  <obj_property name="SHOWPERCENTCOUNT">true</obj_property>
+                  <obj_property name="ShowWaveText">true</obj_property>
+                  <obj_property name="EnumTransactionColorTable">ffffffff=blank</obj_property>
+                  <obj_property name="EnumTransactionValueTable">ffffffff=blank</obj_property>
+                  <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                  <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                  <obj_property name="UseCustomSignalColor">true</obj_property>
+               </wvobject>
+               <wvobject type="group" fp_name="trans_group">
+                  <obj_property name="label">Data Transfers</obj_property>
+                  <obj_property name="DisplayName">label</obj_property>
+                  <obj_property name="isExpanded"></obj_property>
+                  <wvobject type="protoinst" fp_name="/emu_wrapper/emu_i/rt/m_axi_gmem">
+                     <obj_property name="ElementShortName">m_axi_gmem</obj_property>
+                     <obj_property name="ObjectShortName">m_axi_gmem</obj_property>
+                  </wvobject>
+               </wvobject>
+               <wvobject type="group" fp_name="functions">
+                  <obj_property name="label">User Functions</obj_property>
+                  <obj_property name="DisplayName">label</obj_property>
+                  <obj_property name="isExpanded"></obj_property>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: hit_sphere_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function hit_sphere_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: hit_sphere_U0/grp_pow_generic_float_s_fu_617</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function hit_sphere_U0/grp_pow_generic_float_s_fu_617</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_pow_generic_float_s_fu_617/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: hit_sphere_U0/grp_sin_or_cos_float_s_fu_636</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function hit_sphere_U0/grp_sin_or_cos_float_s_fu_636</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_636/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: hit_sphere_U0/grp_sin_or_cos_float_s_fu_651</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function hit_sphere_U0/grp_sin_or_cos_float_s_fu_651</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/hit_sphere_U0/grp_sin_or_cos_float_s_fu_651/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: light_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function light_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/light_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: generate_ray_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function generate_ray_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/generate_ray_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: buffer_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function buffer_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/buffer_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: buffer_write_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function buffer_write_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/buffer_write_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: merge_hit_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function merge_hit_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/merge_hit_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: write_mem_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function write_mem_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/write_mem_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <wvobject type="group" fp_name="mem_group">
+                           <obj_property name="label">gmem</obj_property>
+                           <obj_property name="DisplayName">label</obj_property>
+                           <obj_property name="isExpanded"></obj_property>
+                           <wvobject type="group" fp_name="addr_group">
+                              <obj_property name="label">Read Address</obj_property>
+                              <obj_property name="DisplayName">label</obj_property>
+                              <obj_property name="isExpanded"></obj_property>
+                              <obj_property name="Description_Data">Read Transactions on function AXI-MM port m_axi_gmem</obj_property>
+                           </wvobject>
+                           <wvobject type="group" fp_name="data_group">
+                              <obj_property name="label">Read Data</obj_property>
+                              <obj_property name="DisplayName">label</obj_property>
+                              <obj_property name="isExpanded"></obj_property>
+                              <obj_property name="Description_Data">Read Transactions on function AXI-MM port m_axi_gmem</obj_property>
+                           </wvobject>
+                           <wvobject type="group" fp_name="addr_group">
+                              <obj_property name="label">Write Address</obj_property>
+                              <obj_property name="DisplayName">label</obj_property>
+                              <obj_property name="isExpanded"></obj_property>
+                              <obj_property name="Description_Data">Write Transactions on function AXI-MM port m_axi_gmem</obj_property>
+                           </wvobject>
+                           <wvobject type="group" fp_name="data_group">
+                              <obj_property name="label">Write Data</obj_property>
+                              <obj_property name="DisplayName">label</obj_property>
+                              <obj_property name="isExpanded"></obj_property>
+                              <obj_property name="Description_Data">Write Transactions on function AXI-MM port m_axi_gmem</obj_property>
+                           </wvobject>
+                        </wvobject>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: Block_split70_proc79_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function Block_split70_proc79_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/Block_split70_proc79_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: buffer_read_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function buffer_read_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/buffer_read_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: merge_pixel_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function merge_pixel_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/merge_pixel_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: generate_pixel_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function generate_pixel_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/generate_pixel_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: count_pixel_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function count_pixel_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/count_pixel_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: Loop_VITIS_LOOP_395_1_proc_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function Loop_VITIS_LOOP_395_1_proc_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/Loop_VITIS_LOOP_395_1_proc_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+                  <wvobject type="group" fp_name="func_group">
+                     <obj_property name="label">Function: Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0</obj_property>
+                     <obj_property name="DisplayName">label</obj_property>
+                     <obj_property name="isExpanded"></obj_property>
+                     <obj_property name="Description_Data">Activity for function Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0</obj_property>
+                     <obj_property name="EnumTransactionColorTable">1=blank</obj_property>
+                     <obj_property name="EnumTransactionValueTable">1=blank;0=Running</obj_property>
+                     <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+                     <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                     <obj_property name="UseCustomSignalColor">true</obj_property>
+                     <obj_property name="Render_Data">/emu_wrapper/emu_i/rt/inst/Block_ZN13buffer_memoryC2ERK11render_info_exit_proc_U0/ap_idle</obj_property>
+                     <wvobject type="vbus" fp_name="stall_vbus">
+                        <obj_property name="label">Function Stalls</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                        <obj_property name="EnumTransactionColorTable">3=blank</obj_property>
+                        <obj_property name="EnumTransactionValueTable">3=blank;0=stall;1=stall;2=stall</obj_property>
+                        <obj_property name="ShowWaveText">false</obj_property>
+                        <obj_property name="CustomSignalColor">#FF7F27</obj_property>
+                        <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+                        <obj_property name="UseCustomSignalColor">true</obj_property>
+                     </wvobject>
+                     <wvobject type="group" fp_name="io_group">
+                        <obj_property name="label">Function I/O</obj_property>
+                        <obj_property name="DisplayName">label</obj_property>
+                     </wvobject>
+                  </wvobject>
+               </wvobject>
+            </wvobject>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group371">
+      <obj_property name="label">genpix</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage7_line_loop73_dout">
+         <obj_property name="ElementShortName">stage7_line_loop73_dout[15:0]</obj_property>
+         <obj_property name="ObjectShortName">stage7_line_loop73_dout[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage7_line_loop73_read">
+         <obj_property name="ElementShortName">stage7_line_loop73_read</obj_property>
+         <obj_property name="ObjectShortName">stage7_line_loop73_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage7_line_loop73_empty_n">
+         <obj_property name="ElementShortName">stage7_line_loop73_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage7_line_loop73_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_full_n">
+         <obj_property name="ElementShortName">stage0_pos_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage0_pos_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_write">
+         <obj_property name="ElementShortName">stage0_pos_write</obj_property>
+         <obj_property name="ObjectShortName">stage0_pos_write</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din">
+         <obj_property name="ElementShortName">stage0_pos_din[31:0]</obj_property>
+         <obj_property name="ObjectShortName">stage0_pos_din[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus564">
+         <obj_property name="label">x</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+         <obj_property name="CellHeight">50</obj_property>
+         <obj_property name="AnalogYRangeType">ANALOG_YRANGETYPE_AUTO</obj_property>
+         <obj_property name="AnalogYRangeMin">0.000000</obj_property>
+         <obj_property name="AnalogYRRangeMax">0.000000</obj_property>
+         <obj_property name="AnalogInterpolation">ANALOG_INTERPOLATION_LINEAR</obj_property>
+         <obj_property name="AnalogOffscale">ANALOG_OFFSCALE_HIDE</obj_property>
+         <obj_property name="AnalogHorizLine">0.000000</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[15]">
+            <obj_property name="ElementShortName">[15]</obj_property>
+            <obj_property name="ObjectShortName">[15]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[14]">
+            <obj_property name="ElementShortName">[14]</obj_property>
+            <obj_property name="ObjectShortName">[14]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[13]">
+            <obj_property name="ElementShortName">[13]</obj_property>
+            <obj_property name="ObjectShortName">[13]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[12]">
+            <obj_property name="ElementShortName">[12]</obj_property>
+            <obj_property name="ObjectShortName">[12]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[11]">
+            <obj_property name="ElementShortName">[11]</obj_property>
+            <obj_property name="ObjectShortName">[11]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[10]">
+            <obj_property name="ElementShortName">[10]</obj_property>
+            <obj_property name="ObjectShortName">[10]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[9]">
+            <obj_property name="ElementShortName">[9]</obj_property>
+            <obj_property name="ObjectShortName">[9]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[8]">
+            <obj_property name="ElementShortName">[8]</obj_property>
+            <obj_property name="ObjectShortName">[8]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[7]">
+            <obj_property name="ElementShortName">[7]</obj_property>
+            <obj_property name="ObjectShortName">[7]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[6]">
+            <obj_property name="ElementShortName">[6]</obj_property>
+            <obj_property name="ObjectShortName">[6]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[5]">
+            <obj_property name="ElementShortName">[5]</obj_property>
+            <obj_property name="ObjectShortName">[5]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[4]">
+            <obj_property name="ElementShortName">[4]</obj_property>
+            <obj_property name="ObjectShortName">[4]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[3]">
+            <obj_property name="ElementShortName">[3]</obj_property>
+            <obj_property name="ObjectShortName">[3]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[2]">
+            <obj_property name="ElementShortName">[2]</obj_property>
+            <obj_property name="ObjectShortName">[2]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[1]">
+            <obj_property name="ElementShortName">[1]</obj_property>
+            <obj_property name="ObjectShortName">[1]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[0]">
+            <obj_property name="ElementShortName">[0]</obj_property>
+            <obj_property name="ObjectShortName">[0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus547">
+         <obj_property name="label">y</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[31]">
+            <obj_property name="ElementShortName">[31]</obj_property>
+            <obj_property name="ObjectShortName">[31]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[30]">
+            <obj_property name="ElementShortName">[30]</obj_property>
+            <obj_property name="ObjectShortName">[30]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[29]">
+            <obj_property name="ElementShortName">[29]</obj_property>
+            <obj_property name="ObjectShortName">[29]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[28]">
+            <obj_property name="ElementShortName">[28]</obj_property>
+            <obj_property name="ObjectShortName">[28]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[27]">
+            <obj_property name="ElementShortName">[27]</obj_property>
+            <obj_property name="ObjectShortName">[27]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[26]">
+            <obj_property name="ElementShortName">[26]</obj_property>
+            <obj_property name="ObjectShortName">[26]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[25]">
+            <obj_property name="ElementShortName">[25]</obj_property>
+            <obj_property name="ObjectShortName">[25]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[24]">
+            <obj_property name="ElementShortName">[24]</obj_property>
+            <obj_property name="ObjectShortName">[24]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[23]">
+            <obj_property name="ElementShortName">[23]</obj_property>
+            <obj_property name="ObjectShortName">[23]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[22]">
+            <obj_property name="ElementShortName">[22]</obj_property>
+            <obj_property name="ObjectShortName">[22]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[21]">
+            <obj_property name="ElementShortName">[21]</obj_property>
+            <obj_property name="ObjectShortName">[21]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[20]">
+            <obj_property name="ElementShortName">[20]</obj_property>
+            <obj_property name="ObjectShortName">[20]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[19]">
+            <obj_property name="ElementShortName">[19]</obj_property>
+            <obj_property name="ObjectShortName">[19]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[18]">
+            <obj_property name="ElementShortName">[18]</obj_property>
+            <obj_property name="ObjectShortName">[18]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[17]">
+            <obj_property name="ElementShortName">[17]</obj_property>
+            <obj_property name="ObjectShortName">[17]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_pixel_U0/stage0_pos_din[16]">
+            <obj_property name="ElementShortName">[16]</obj_property>
+            <obj_property name="ObjectShortName">[16]</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group372">
+      <obj_property name="label">merge pix</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_pixel_U0/stage0_pos_empty_n">
+         <obj_property name="ElementShortName">stage0_pos_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage0_pos_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_pixel_U0/stage0_pos_read">
+         <obj_property name="ElementShortName">stage0_pos_read</obj_property>
+         <obj_property name="ObjectShortName">stage0_pos_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_pixel_U0/stage5_pix_loop_empty_n">
+         <obj_property name="ElementShortName">stage5_pix_loop_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_loop_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_pixel_U0/stage5_pix_loop_read">
+         <obj_property name="ElementShortName">stage5_pix_loop_read</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_loop_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_pixel_U0/stage1_pix_full_n">
+         <obj_property name="ElementShortName">stage1_pix_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage1_pix_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_pixel_U0/stage1_pix_write">
+         <obj_property name="ElementShortName">stage1_pix_write</obj_property>
+         <obj_property name="ObjectShortName">stage1_pix_write</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group373">
+      <obj_property name="label">gen ray</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_ray_U0/stage1_pix_empty_n">
+         <obj_property name="ElementShortName">stage1_pix_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage1_pix_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_ray_U0/stage1_pix_read">
+         <obj_property name="ElementShortName">stage1_pix_read</obj_property>
+         <obj_property name="ObjectShortName">stage1_pix_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_ray_U0/stage2_ray_full_n">
+         <obj_property name="ElementShortName">stage2_ray_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage2_ray_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/generate_ray_U0/stage2_ray_write">
+         <obj_property name="ElementShortName">stage2_ray_write</obj_property>
+         <obj_property name="ObjectShortName">stage2_ray_write</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group374">
+      <obj_property name="label">merge hit</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_hit_U0/stage2_ray_empty_n">
+         <obj_property name="ElementShortName">stage2_ray_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage2_ray_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_hit_U0/stage2_ray_read">
+         <obj_property name="ElementShortName">stage2_ray_read</obj_property>
+         <obj_property name="ObjectShortName">stage2_ray_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_hit_U0/stage4_ray_loop_empty_n">
+         <obj_property name="ElementShortName">stage4_ray_loop_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_loop_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_hit_U0/stage4_ray_loop_read">
+         <obj_property name="ElementShortName">stage4_ray_loop_read</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_loop_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_hit_U0/stage3_ray_full_n">
+         <obj_property name="ElementShortName">stage3_ray_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage3_ray_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_hit_U0/stage3_ray_write">
+         <obj_property name="ElementShortName">stage3_ray_write</obj_property>
+         <obj_property name="ObjectShortName">stage3_ray_write</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_hit_U0/stage3_pix_full_n">
+         <obj_property name="ElementShortName">stage3_pix_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage3_pix_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/merge_hit_U0/stage3_pix_write">
+         <obj_property name="ElementShortName">stage3_pix_write</obj_property>
+         <obj_property name="ObjectShortName">stage3_pix_write</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group375">
+      <obj_property name="label">hit</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage3_ray_empty_n">
+         <obj_property name="ElementShortName">stage3_ray_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage3_ray_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage3_ray_read">
+         <obj_property name="ElementShortName">stage3_ray_read</obj_property>
+         <obj_property name="ObjectShortName">stage3_ray_read</obj_property>
+         <obj_property name="CustomSignalColor">#008080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage3_pix_empty_n">
+         <obj_property name="ElementShortName">stage3_pix_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage3_pix_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage3_pix_read">
+         <obj_property name="ElementShortName">stage3_pix_read</obj_property>
+         <obj_property name="ObjectShortName">stage3_pix_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_full_n">
+         <obj_property name="ElementShortName">stage4_ray_loop_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_loop_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_write">
+         <obj_property name="ElementShortName">stage4_ray_loop_write</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_loop_write</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din">
+         <obj_property name="ElementShortName">stage4_ray_loop_din[831:0]</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_loop_din[831:0]</obj_property>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus1464">
+         <obj_property name="label">x</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[815]">
+            <obj_property name="ElementShortName">[815]</obj_property>
+            <obj_property name="ObjectShortName">[815]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[814]">
+            <obj_property name="ElementShortName">[814]</obj_property>
+            <obj_property name="ObjectShortName">[814]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[813]">
+            <obj_property name="ElementShortName">[813]</obj_property>
+            <obj_property name="ObjectShortName">[813]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[812]">
+            <obj_property name="ElementShortName">[812]</obj_property>
+            <obj_property name="ObjectShortName">[812]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[811]">
+            <obj_property name="ElementShortName">[811]</obj_property>
+            <obj_property name="ObjectShortName">[811]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[810]">
+            <obj_property name="ElementShortName">[810]</obj_property>
+            <obj_property name="ObjectShortName">[810]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[809]">
+            <obj_property name="ElementShortName">[809]</obj_property>
+            <obj_property name="ObjectShortName">[809]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[808]">
+            <obj_property name="ElementShortName">[808]</obj_property>
+            <obj_property name="ObjectShortName">[808]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[807]">
+            <obj_property name="ElementShortName">[807]</obj_property>
+            <obj_property name="ObjectShortName">[807]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[806]">
+            <obj_property name="ElementShortName">[806]</obj_property>
+            <obj_property name="ObjectShortName">[806]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[805]">
+            <obj_property name="ElementShortName">[805]</obj_property>
+            <obj_property name="ObjectShortName">[805]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[804]">
+            <obj_property name="ElementShortName">[804]</obj_property>
+            <obj_property name="ObjectShortName">[804]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[803]">
+            <obj_property name="ElementShortName">[803]</obj_property>
+            <obj_property name="ObjectShortName">[803]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[802]">
+            <obj_property name="ElementShortName">[802]</obj_property>
+            <obj_property name="ObjectShortName">[802]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[801]">
+            <obj_property name="ElementShortName">[801]</obj_property>
+            <obj_property name="ObjectShortName">[801]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[800]">
+            <obj_property name="ElementShortName">[800]</obj_property>
+            <obj_property name="ObjectShortName">[800]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus1447">
+         <obj_property name="label">y</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[831]">
+            <obj_property name="ElementShortName">[831]</obj_property>
+            <obj_property name="ObjectShortName">[831]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[830]">
+            <obj_property name="ElementShortName">[830]</obj_property>
+            <obj_property name="ObjectShortName">[830]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[829]">
+            <obj_property name="ElementShortName">[829]</obj_property>
+            <obj_property name="ObjectShortName">[829]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[828]">
+            <obj_property name="ElementShortName">[828]</obj_property>
+            <obj_property name="ObjectShortName">[828]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[827]">
+            <obj_property name="ElementShortName">[827]</obj_property>
+            <obj_property name="ObjectShortName">[827]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[826]">
+            <obj_property name="ElementShortName">[826]</obj_property>
+            <obj_property name="ObjectShortName">[826]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[825]">
+            <obj_property name="ElementShortName">[825]</obj_property>
+            <obj_property name="ObjectShortName">[825]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[824]">
+            <obj_property name="ElementShortName">[824]</obj_property>
+            <obj_property name="ObjectShortName">[824]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[823]">
+            <obj_property name="ElementShortName">[823]</obj_property>
+            <obj_property name="ObjectShortName">[823]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[822]">
+            <obj_property name="ElementShortName">[822]</obj_property>
+            <obj_property name="ObjectShortName">[822]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[821]">
+            <obj_property name="ElementShortName">[821]</obj_property>
+            <obj_property name="ObjectShortName">[821]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[820]">
+            <obj_property name="ElementShortName">[820]</obj_property>
+            <obj_property name="ObjectShortName">[820]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[819]">
+            <obj_property name="ElementShortName">[819]</obj_property>
+            <obj_property name="ObjectShortName">[819]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[818]">
+            <obj_property name="ElementShortName">[818]</obj_property>
+            <obj_property name="ObjectShortName">[818]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[817]">
+            <obj_property name="ElementShortName">[817]</obj_property>
+            <obj_property name="ObjectShortName">[817]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_loop_din[816]">
+            <obj_property name="ElementShortName">[816]</obj_property>
+            <obj_property name="ObjectShortName">[816]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_full_n">
+         <obj_property name="ElementShortName">stage4_ray_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_write">
+         <obj_property name="ElementShortName">stage4_ray_write</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_write</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din">
+         <obj_property name="ElementShortName">stage4_ray_din[479:0]</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_din[479:0]</obj_property>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus1978">
+         <obj_property name="label">x</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[463]">
+            <obj_property name="ElementShortName">[463]</obj_property>
+            <obj_property name="ObjectShortName">[463]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[462]">
+            <obj_property name="ElementShortName">[462]</obj_property>
+            <obj_property name="ObjectShortName">[462]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[461]">
+            <obj_property name="ElementShortName">[461]</obj_property>
+            <obj_property name="ObjectShortName">[461]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[460]">
+            <obj_property name="ElementShortName">[460]</obj_property>
+            <obj_property name="ObjectShortName">[460]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[459]">
+            <obj_property name="ElementShortName">[459]</obj_property>
+            <obj_property name="ObjectShortName">[459]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[458]">
+            <obj_property name="ElementShortName">[458]</obj_property>
+            <obj_property name="ObjectShortName">[458]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[457]">
+            <obj_property name="ElementShortName">[457]</obj_property>
+            <obj_property name="ObjectShortName">[457]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[456]">
+            <obj_property name="ElementShortName">[456]</obj_property>
+            <obj_property name="ObjectShortName">[456]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[455]">
+            <obj_property name="ElementShortName">[455]</obj_property>
+            <obj_property name="ObjectShortName">[455]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[454]">
+            <obj_property name="ElementShortName">[454]</obj_property>
+            <obj_property name="ObjectShortName">[454]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[453]">
+            <obj_property name="ElementShortName">[453]</obj_property>
+            <obj_property name="ObjectShortName">[453]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[452]">
+            <obj_property name="ElementShortName">[452]</obj_property>
+            <obj_property name="ObjectShortName">[452]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[451]">
+            <obj_property name="ElementShortName">[451]</obj_property>
+            <obj_property name="ObjectShortName">[451]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[450]">
+            <obj_property name="ElementShortName">[450]</obj_property>
+            <obj_property name="ObjectShortName">[450]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[449]">
+            <obj_property name="ElementShortName">[449]</obj_property>
+            <obj_property name="ObjectShortName">[449]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[448]">
+            <obj_property name="ElementShortName">[448]</obj_property>
+            <obj_property name="ObjectShortName">[448]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus1961">
+         <obj_property name="label">y</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[479]">
+            <obj_property name="ElementShortName">[479]</obj_property>
+            <obj_property name="ObjectShortName">[479]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[478]">
+            <obj_property name="ElementShortName">[478]</obj_property>
+            <obj_property name="ObjectShortName">[478]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[477]">
+            <obj_property name="ElementShortName">[477]</obj_property>
+            <obj_property name="ObjectShortName">[477]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[476]">
+            <obj_property name="ElementShortName">[476]</obj_property>
+            <obj_property name="ObjectShortName">[476]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[475]">
+            <obj_property name="ElementShortName">[475]</obj_property>
+            <obj_property name="ObjectShortName">[475]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[474]">
+            <obj_property name="ElementShortName">[474]</obj_property>
+            <obj_property name="ObjectShortName">[474]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[473]">
+            <obj_property name="ElementShortName">[473]</obj_property>
+            <obj_property name="ObjectShortName">[473]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[472]">
+            <obj_property name="ElementShortName">[472]</obj_property>
+            <obj_property name="ObjectShortName">[472]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[471]">
+            <obj_property name="ElementShortName">[471]</obj_property>
+            <obj_property name="ObjectShortName">[471]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[470]">
+            <obj_property name="ElementShortName">[470]</obj_property>
+            <obj_property name="ObjectShortName">[470]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[469]">
+            <obj_property name="ElementShortName">[469]</obj_property>
+            <obj_property name="ObjectShortName">[469]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[468]">
+            <obj_property name="ElementShortName">[468]</obj_property>
+            <obj_property name="ObjectShortName">[468]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[467]">
+            <obj_property name="ElementShortName">[467]</obj_property>
+            <obj_property name="ObjectShortName">[467]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[466]">
+            <obj_property name="ElementShortName">[466]</obj_property>
+            <obj_property name="ObjectShortName">[466]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[465]">
+            <obj_property name="ElementShortName">[465]</obj_property>
+            <obj_property name="ObjectShortName">[465]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/hit_sphere_U0/stage4_ray_din[464]">
+            <obj_property name="ElementShortName">[464]</obj_property>
+            <obj_property name="ObjectShortName">[464]</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group376">
+      <obj_property name="label">light</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage4_ray_empty_n">
+         <obj_property name="ElementShortName">stage4_ray_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage4_ray_read">
+         <obj_property name="ElementShortName">stage4_ray_read</obj_property>
+         <obj_property name="ObjectShortName">stage4_ray_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_full_n">
+         <obj_property name="ElementShortName">stage5_pix_loop_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_loop_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_write">
+         <obj_property name="ElementShortName">stage5_pix_loop_write</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_loop_write</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din">
+         <obj_property name="ElementShortName">stage5_pix_loop_din[159:0]</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_loop_din[159:0]</obj_property>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus898">
+         <obj_property name="label">pix_loop-x</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[143]">
+            <obj_property name="ElementShortName">[143]</obj_property>
+            <obj_property name="ObjectShortName">[143]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[142]">
+            <obj_property name="ElementShortName">[142]</obj_property>
+            <obj_property name="ObjectShortName">[142]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[141]">
+            <obj_property name="ElementShortName">[141]</obj_property>
+            <obj_property name="ObjectShortName">[141]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[140]">
+            <obj_property name="ElementShortName">[140]</obj_property>
+            <obj_property name="ObjectShortName">[140]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[139]">
+            <obj_property name="ElementShortName">[139]</obj_property>
+            <obj_property name="ObjectShortName">[139]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[138]">
+            <obj_property name="ElementShortName">[138]</obj_property>
+            <obj_property name="ObjectShortName">[138]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[137]">
+            <obj_property name="ElementShortName">[137]</obj_property>
+            <obj_property name="ObjectShortName">[137]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[136]">
+            <obj_property name="ElementShortName">[136]</obj_property>
+            <obj_property name="ObjectShortName">[136]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[135]">
+            <obj_property name="ElementShortName">[135]</obj_property>
+            <obj_property name="ObjectShortName">[135]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[134]">
+            <obj_property name="ElementShortName">[134]</obj_property>
+            <obj_property name="ObjectShortName">[134]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[133]">
+            <obj_property name="ElementShortName">[133]</obj_property>
+            <obj_property name="ObjectShortName">[133]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[132]">
+            <obj_property name="ElementShortName">[132]</obj_property>
+            <obj_property name="ObjectShortName">[132]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[131]">
+            <obj_property name="ElementShortName">[131]</obj_property>
+            <obj_property name="ObjectShortName">[131]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[130]">
+            <obj_property name="ElementShortName">[130]</obj_property>
+            <obj_property name="ObjectShortName">[130]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[129]">
+            <obj_property name="ElementShortName">[129]</obj_property>
+            <obj_property name="ObjectShortName">[129]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[128]">
+            <obj_property name="ElementShortName">[128]</obj_property>
+            <obj_property name="ObjectShortName">[128]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus881">
+         <obj_property name="label">pix_loop-y</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[159]">
+            <obj_property name="ElementShortName">[159]</obj_property>
+            <obj_property name="ObjectShortName">[159]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[158]">
+            <obj_property name="ElementShortName">[158]</obj_property>
+            <obj_property name="ObjectShortName">[158]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[157]">
+            <obj_property name="ElementShortName">[157]</obj_property>
+            <obj_property name="ObjectShortName">[157]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[156]">
+            <obj_property name="ElementShortName">[156]</obj_property>
+            <obj_property name="ObjectShortName">[156]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[155]">
+            <obj_property name="ElementShortName">[155]</obj_property>
+            <obj_property name="ObjectShortName">[155]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[154]">
+            <obj_property name="ElementShortName">[154]</obj_property>
+            <obj_property name="ObjectShortName">[154]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[153]">
+            <obj_property name="ElementShortName">[153]</obj_property>
+            <obj_property name="ObjectShortName">[153]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[152]">
+            <obj_property name="ElementShortName">[152]</obj_property>
+            <obj_property name="ObjectShortName">[152]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[151]">
+            <obj_property name="ElementShortName">[151]</obj_property>
+            <obj_property name="ObjectShortName">[151]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[150]">
+            <obj_property name="ElementShortName">[150]</obj_property>
+            <obj_property name="ObjectShortName">[150]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[149]">
+            <obj_property name="ElementShortName">[149]</obj_property>
+            <obj_property name="ObjectShortName">[149]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[148]">
+            <obj_property name="ElementShortName">[148]</obj_property>
+            <obj_property name="ObjectShortName">[148]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[147]">
+            <obj_property name="ElementShortName">[147]</obj_property>
+            <obj_property name="ObjectShortName">[147]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[146]">
+            <obj_property name="ElementShortName">[146]</obj_property>
+            <obj_property name="ObjectShortName">[146]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[145]">
+            <obj_property name="ElementShortName">[145]</obj_property>
+            <obj_property name="ObjectShortName">[145]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_loop_din[144]">
+            <obj_property name="ElementShortName">[144]</obj_property>
+            <obj_property name="ObjectShortName">[144]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_full_n">
+         <obj_property name="ElementShortName">stage5_pix_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_write">
+         <obj_property name="ElementShortName">stage5_pix_write</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_write</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din">
+         <obj_property name="ElementShortName">stage5_pix_din[159:0]</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_din[159:0]</obj_property>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus2172">
+         <obj_property name="label">pix-x</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[143]">
+            <obj_property name="ElementShortName">[143]</obj_property>
+            <obj_property name="ObjectShortName">[143]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[142]">
+            <obj_property name="ElementShortName">[142]</obj_property>
+            <obj_property name="ObjectShortName">[142]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[141]">
+            <obj_property name="ElementShortName">[141]</obj_property>
+            <obj_property name="ObjectShortName">[141]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[140]">
+            <obj_property name="ElementShortName">[140]</obj_property>
+            <obj_property name="ObjectShortName">[140]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[139]">
+            <obj_property name="ElementShortName">[139]</obj_property>
+            <obj_property name="ObjectShortName">[139]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[138]">
+            <obj_property name="ElementShortName">[138]</obj_property>
+            <obj_property name="ObjectShortName">[138]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[137]">
+            <obj_property name="ElementShortName">[137]</obj_property>
+            <obj_property name="ObjectShortName">[137]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[136]">
+            <obj_property name="ElementShortName">[136]</obj_property>
+            <obj_property name="ObjectShortName">[136]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[135]">
+            <obj_property name="ElementShortName">[135]</obj_property>
+            <obj_property name="ObjectShortName">[135]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[134]">
+            <obj_property name="ElementShortName">[134]</obj_property>
+            <obj_property name="ObjectShortName">[134]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[133]">
+            <obj_property name="ElementShortName">[133]</obj_property>
+            <obj_property name="ObjectShortName">[133]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[132]">
+            <obj_property name="ElementShortName">[132]</obj_property>
+            <obj_property name="ObjectShortName">[132]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[131]">
+            <obj_property name="ElementShortName">[131]</obj_property>
+            <obj_property name="ObjectShortName">[131]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[130]">
+            <obj_property name="ElementShortName">[130]</obj_property>
+            <obj_property name="ObjectShortName">[130]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[129]">
+            <obj_property name="ElementShortName">[129]</obj_property>
+            <obj_property name="ObjectShortName">[129]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[128]">
+            <obj_property name="ElementShortName">[128]</obj_property>
+            <obj_property name="ObjectShortName">[128]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="vbus" fp_name="vbus2155">
+         <obj_property name="label">pix-y</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[159]">
+            <obj_property name="ElementShortName">[159]</obj_property>
+            <obj_property name="ObjectShortName">[159]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[158]">
+            <obj_property name="ElementShortName">[158]</obj_property>
+            <obj_property name="ObjectShortName">[158]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[157]">
+            <obj_property name="ElementShortName">[157]</obj_property>
+            <obj_property name="ObjectShortName">[157]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[156]">
+            <obj_property name="ElementShortName">[156]</obj_property>
+            <obj_property name="ObjectShortName">[156]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[155]">
+            <obj_property name="ElementShortName">[155]</obj_property>
+            <obj_property name="ObjectShortName">[155]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[154]">
+            <obj_property name="ElementShortName">[154]</obj_property>
+            <obj_property name="ObjectShortName">[154]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[153]">
+            <obj_property name="ElementShortName">[153]</obj_property>
+            <obj_property name="ObjectShortName">[153]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[152]">
+            <obj_property name="ElementShortName">[152]</obj_property>
+            <obj_property name="ObjectShortName">[152]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[151]">
+            <obj_property name="ElementShortName">[151]</obj_property>
+            <obj_property name="ObjectShortName">[151]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[150]">
+            <obj_property name="ElementShortName">[150]</obj_property>
+            <obj_property name="ObjectShortName">[150]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[149]">
+            <obj_property name="ElementShortName">[149]</obj_property>
+            <obj_property name="ObjectShortName">[149]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[148]">
+            <obj_property name="ElementShortName">[148]</obj_property>
+            <obj_property name="ObjectShortName">[148]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[147]">
+            <obj_property name="ElementShortName">[147]</obj_property>
+            <obj_property name="ObjectShortName">[147]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[146]">
+            <obj_property name="ElementShortName">[146]</obj_property>
+            <obj_property name="ObjectShortName">[146]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[145]">
+            <obj_property name="ElementShortName">[145]</obj_property>
+            <obj_property name="ObjectShortName">[145]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/light_U0/stage5_pix_din[144]">
+            <obj_property name="ElementShortName">[144]</obj_property>
+            <obj_property name="ObjectShortName">[144]</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group377">
+      <obj_property name="label">buf wr</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_write_U0/stage5_pix_empty_n">
+         <obj_property name="ElementShortName">stage5_pix_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_write_U0/stage5_pix_read">
+         <obj_property name="ElementShortName">stage5_pix_read</obj_property>
+         <obj_property name="ObjectShortName">stage5_pix_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_write_U0/stagex_wr_full_n">
+         <obj_property name="ElementShortName">stagex_wr_full_n</obj_property>
+         <obj_property name="ObjectShortName">stagex_wr_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_write_U0/stagex_wr_write">
+         <obj_property name="ElementShortName">stagex_wr_write</obj_property>
+         <obj_property name="ObjectShortName">stagex_wr_write</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_write_U0/stage6_line71_full_n">
+         <obj_property name="ElementShortName">stage6_line71_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage6_line71_full_n</obj_property>
+         <obj_property name="CustomSignalColor">#0000FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_write_U0/stage6_line71_write">
+         <obj_property name="ElementShortName">stage6_line71_write</obj_property>
+         <obj_property name="ObjectShortName">stage6_line71_write</obj_property>
+         <obj_property name="CustomSignalColor">#0000FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group378">
+      <obj_property name="label">count</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/stage6_line71_empty_n">
+         <obj_property name="ElementShortName">stage6_line71_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stage6_line71_empty_n</obj_property>
+         <obj_property name="CustomSignalColor">#0000FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/stage6_line71_read">
+         <obj_property name="ElementShortName">stage6_line71_read</obj_property>
+         <obj_property name="ObjectShortName">stage6_line71_read</obj_property>
+         <obj_property name="CustomSignalColor">#0000FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/stage6_line71_dout">
+         <obj_property name="ElementShortName">stage6_line71_dout[15:0]</obj_property>
+         <obj_property name="ObjectShortName">stage6_line71_dout[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/stagex_line75_full_n">
+         <obj_property name="ElementShortName">stagex_line75_full_n</obj_property>
+         <obj_property name="ObjectShortName">stagex_line75_full_n</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/stagex_line75_write">
+         <obj_property name="ElementShortName">stagex_line75_write</obj_property>
+         <obj_property name="ObjectShortName">stagex_line75_write</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/stagex_line75_din">
+         <obj_property name="ElementShortName">stagex_line75_din[15:0]</obj_property>
+         <obj_property name="ObjectShortName">stagex_line75_din[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group381">
+         <obj_property name="label">count ram</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/address0">
+            <obj_property name="ElementShortName">address0[4:0]</obj_property>
+            <obj_property name="ObjectShortName">address0[4:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/we0">
+            <obj_property name="ElementShortName">we0</obj_property>
+            <obj_property name="ObjectShortName">we0</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/d0">
+            <obj_property name="ElementShortName">d0[15:0]</obj_property>
+            <obj_property name="ObjectShortName">d0[15:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram">
+            <obj_property name="ElementShortName">ram[0:31][15:0]</obj_property>
+            <obj_property name="ObjectShortName">ram[0:31][15:0]</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[0]">
+               <obj_property name="ElementShortName">[0][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[0][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[1]">
+               <obj_property name="ElementShortName">[1][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[1][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[2]">
+               <obj_property name="ElementShortName">[2][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[2][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[3]">
+               <obj_property name="ElementShortName">[3][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[3][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[4]">
+               <obj_property name="ElementShortName">[4][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[4][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[5]">
+               <obj_property name="ElementShortName">[5][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[5][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[6]">
+               <obj_property name="ElementShortName">[6][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[6][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[7]">
+               <obj_property name="ElementShortName">[7][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[7][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[8]">
+               <obj_property name="ElementShortName">[8][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[8][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[9]">
+               <obj_property name="ElementShortName">[9][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[9][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[10]">
+               <obj_property name="ElementShortName">[10][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[10][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[11]">
+               <obj_property name="ElementShortName">[11][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[11][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[12]">
+               <obj_property name="ElementShortName">[12][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[12][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[13]">
+               <obj_property name="ElementShortName">[13][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[13][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[14]">
+               <obj_property name="ElementShortName">[14][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[14][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[15]">
+               <obj_property name="ElementShortName">[15][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[15][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[16]">
+               <obj_property name="ElementShortName">[16][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[16][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[17]">
+               <obj_property name="ElementShortName">[17][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[17][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[18]">
+               <obj_property name="ElementShortName">[18][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[18][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[19]">
+               <obj_property name="ElementShortName">[19][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[19][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[20]">
+               <obj_property name="ElementShortName">[20][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[20][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[21]">
+               <obj_property name="ElementShortName">[21][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[21][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[22]">
+               <obj_property name="ElementShortName">[22][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[22][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[23]">
+               <obj_property name="ElementShortName">[23][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[23][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[24]">
+               <obj_property name="ElementShortName">[24][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[24][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[25]">
+               <obj_property name="ElementShortName">[25][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[25][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[26]">
+               <obj_property name="ElementShortName">[26][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[26][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[27]">
+               <obj_property name="ElementShortName">[27][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[27][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[28]">
+               <obj_property name="ElementShortName">[28][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[28][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[29]">
+               <obj_property name="ElementShortName">[29][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[29][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[30]">
+               <obj_property name="ElementShortName">[30][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[30][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/count_pixel_U0/pixel_count_U/rt_count_pixel_pixel_count_ram_U/ram[31]">
+               <obj_property name="ElementShortName">[31][15:0]</obj_property>
+               <obj_property name="ObjectShortName">[31][15:0]</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+            </wvobject>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group379">
+      <obj_property name="label">bur rd</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stagex_rd74_full_n">
+         <obj_property name="ElementShortName">stagex_rd74_full_n</obj_property>
+         <obj_property name="ObjectShortName">stagex_rd74_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stagex_rd74_write">
+         <obj_property name="ElementShortName">stagex_rd74_write</obj_property>
+         <obj_property name="ObjectShortName">stagex_rd74_write</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stagex_line75_empty_n">
+         <obj_property name="ElementShortName">stagex_line75_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stagex_line75_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stagex_line75_read">
+         <obj_property name="ElementShortName">stagex_line75_read</obj_property>
+         <obj_property name="ObjectShortName">stagex_line75_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stage7_line72_full_n">
+         <obj_property name="ElementShortName">stage7_line72_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage7_line72_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stage7_line72_write">
+         <obj_property name="ElementShortName">stage7_line72_write</obj_property>
+         <obj_property name="ObjectShortName">stage7_line72_write</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stage7_line_loop73_full_n">
+         <obj_property name="ElementShortName">stage7_line_loop73_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage7_line_loop73_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stage7_line_loop73_write">
+         <obj_property name="ElementShortName">stage7_line_loop73_write</obj_property>
+         <obj_property name="ObjectShortName">stage7_line_loop73_write</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stage7_line_loop73_din">
+         <obj_property name="ElementShortName">stage7_line_loop73_din[15:0]</obj_property>
+         <obj_property name="ObjectShortName">stage7_line_loop73_din[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stage7_line72_din">
+         <obj_property name="ElementShortName">stage7_line72_din[15:0]</obj_property>
+         <obj_property name="ObjectShortName">stage7_line72_din[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/stagex_line75_dout">
+         <obj_property name="ElementShortName">stagex_line75_dout[15:0]</obj_property>
+         <obj_property name="ObjectShortName">stagex_line75_dout[15:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group380">
+      <obj_property name="label">buf</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_U0/stagex_wr_empty_n">
+         <obj_property name="ElementShortName">stagex_wr_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stagex_wr_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_U0/stagex_wr_read">
+         <obj_property name="ElementShortName">stagex_wr_read</obj_property>
+         <obj_property name="ObjectShortName">stagex_wr_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_U0/stagex_rd74_empty_n">
+         <obj_property name="ElementShortName">stagex_rd74_empty_n</obj_property>
+         <obj_property name="ObjectShortName">stagex_rd74_empty_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_U0/stagex_rd74_read">
+         <obj_property name="ElementShortName">stagex_rd74_read</obj_property>
+         <obj_property name="ObjectShortName">stagex_rd74_read</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_U0/stage7_blk_full_n">
+         <obj_property name="ElementShortName">stage7_blk_full_n</obj_property>
+         <obj_property name="ObjectShortName">stage7_blk_full_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_U0/stage7_blk_write">
+         <obj_property name="ElementShortName">stage7_blk_write</obj_property>
+         <obj_property name="ObjectShortName">stage7_blk_write</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/write_mem_U0/i_reg_213">
+      <obj_property name="ElementShortName">i_reg_213[15:0]</obj_property>
+      <obj_property name="ObjectShortName">i_reg_213[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/emu_wrapper/emu_i/rt/U0/buffer_read_U0/i_reg_154">
+      <obj_property name="ElementShortName">i_reg_154[15:0]</obj_property>
+      <obj_property name="ObjectShortName">i_reg_154[15:0]</obj_property>
+   </wvobject>
+</wave_config>

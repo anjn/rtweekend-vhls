@@ -2,8 +2,10 @@
 
 struct xorshift32
 {
-  static const uint32_t min = 1;
-  static const uint32_t max = ~0;
+  static constexpr uint32_t min = 1;
+  static constexpr uint32_t max = ~0;
+  static constexpr float max_float = max;
+  static constexpr float max_float_inv = 1.0f / max;
 
   uint32_t y;
 
