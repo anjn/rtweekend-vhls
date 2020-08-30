@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
   //const int image_width = 64;
   //const int image_height = 36;
 
-  const int samples_per_pixel = 16*16;
+  const int samples_per_pixel = 256;
   const int image_width = 1920;
   const int image_height = 1080;
 
@@ -38,12 +38,13 @@ int main(int argc, char **argv) {
 
   host_buffer<object> host_objects;
 
-  host_objects.push_back(make_sphere({ 0,      0, -1  }, 0.5, make_metal({1.0, 1.0, 1.0}, 0.0)));
-  host_objects.push_back(make_sphere({ 0, -100.5, -1  }, 100, make_lambertian({0.8, 0.8, 0.3})));
-  host_objects.push_back(make_sphere({-1,      0, -1  }, 0.4, make_metal({1.0, 0.8, 0.8}, 0.1)));
-  host_objects.push_back(make_sphere({-0.5,   -0.4, -0.5}, 0.1, make_lambertian({0.3, 0.8, 0.3})));
-  host_objects.push_back(make_sphere({ 1,      0, -1  }, 0.3, make_lambertian({0.3, 0.3, 0.8})));
-  host_objects.push_back(make_sphere({ 0.4,   -0.4, -0.7  }, 0.1, make_lambertian({0.9, 0.8, 0.1})));
+  host_objects.push_back(make_sphere({ 0.0,    0.0, -1.2}, 0.5, make_metal     ({1.0, 1.0, 1.0}, 0.0)));
+  host_objects.push_back(make_sphere({ 0.0, -100.5, -1.0}, 100, make_lambertian({0.8, 0.8, 0.3}     )));
+  host_objects.push_back(make_sphere({-1.0,   -0.1, -1.0}, 0.4, make_metal     ({1.0, 0.8, 0.8}, 0.1)));
+  host_objects.push_back(make_sphere({-0.5,   -0.4, -0.5}, 0.1, make_lambertian({0.3, 0.8, 0.3}     )));
+  host_objects.push_back(make_sphere({ 1.0,   -0.2, -1.0}, 0.3, make_lambertian({0.3, 0.3, 0.8}     )));
+  host_objects.push_back(make_sphere({ 0.4,   -0.4, -0.7}, 0.1, make_lambertian({0.9, 0.8, 0.1}     )));
+  host_objects.push_back(make_sphere({ 0.1,   -0.4, -0.6}, 0.1, make_lambertian({0.9, 0.1, 0.1}     )));
 
   cl::Memory device_objects = make_device_buffer(context, CL_MEM_READ_ONLY, host_objects);
 
