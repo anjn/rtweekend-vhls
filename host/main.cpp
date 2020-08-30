@@ -38,10 +38,12 @@ int main(int argc, char **argv) {
 
   host_buffer<object> host_objects;
 
-  host_objects.push_back(make_sphere({ 0,      0, -1}, 0.5, make_metal({0.8, 0.8, 1.0}, 0.0)));
-  host_objects.push_back(make_sphere({ 0, -100.5, -1}, 100, make_lambertian({0.8, 0.8, 0.3})));
-  host_objects.push_back(make_sphere({-1,      0, -1}, 0.4, make_lambertian({0.8, 0.3, 0.3})));
-  host_objects.push_back(make_sphere({ 1,      0, -1}, 0.3, make_lambertian({0.3, 0.3, 0.8})));
+  host_objects.push_back(make_sphere({ 0,      0, -1  }, 0.5, make_metal({1.0, 1.0, 1.0}, 0.0)));
+  host_objects.push_back(make_sphere({ 0, -100.5, -1  }, 100, make_lambertian({0.8, 0.8, 0.3})));
+  host_objects.push_back(make_sphere({-1,      0, -1  }, 0.4, make_metal({1.0, 0.8, 0.8}, 0.1)));
+  host_objects.push_back(make_sphere({-0.5,   -0.4, -0.5}, 0.1, make_lambertian({0.3, 0.8, 0.3})));
+  host_objects.push_back(make_sphere({ 1,      0, -1  }, 0.3, make_lambertian({0.3, 0.3, 0.8})));
+  host_objects.push_back(make_sphere({ 0.4,   -0.4, -0.7  }, 0.1, make_lambertian({0.9, 0.8, 0.1})));
 
   cl::Memory device_objects = make_device_buffer(context, CL_MEM_READ_ONLY, host_objects);
 
@@ -69,12 +71,12 @@ int main(int argc, char **argv) {
   cl::Event e_mem_wr;
   q.enqueueMigrateMemObjects({device_image, device_objects}, 0, nullptr, &e_mem_wr);
 
-  for (int i=0; i<5; i++) {
-    int sx = image_width / 5 * (i + 0);
-    int ex = image_width / 5 * (i + 1);
+  for (int i=0; i<1; i++) {
+    int sx = image_width / 1 * (i + 0);
+    int ex = image_width / 1 * (i + 1);
     render(sx, 0, ex, image_height, 1.0f, {e_mem_wr});
   }
-  render(0, 0, image_width, image_height, 1.0f, {e_mem_wr});
+  //render(0, 0, image_width, image_height, 1.0f, {e_mem_wr});
   //render(0, 0, image_width, image_height, 0.5f, {e_mem_wr});
 
   q.enqueueMigrateMemObjects({device_image}, CL_MIGRATE_MEM_OBJECT_HOST, &events);

@@ -3,7 +3,7 @@
 #include "ray.hpp"
 #include "object.hpp"
 
-const int MAX_OBJECTS = 4;
+const int MAX_OBJECTS = 8;
 
 struct hit_record
 {
@@ -75,6 +75,8 @@ struct hittable_list
   hittable objects[MAX_OBJECTS];
 
   hittable_list() {
+#pragma HLS INLINE
+#pragma HLS ARRAY_PARTITION variable=objects complete
   }
 
   bool hit(const ray& r, value_t t_min, value_t t_max, hit_record& rec) const {

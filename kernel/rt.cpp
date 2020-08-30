@@ -261,7 +261,9 @@ void hit_sphere(
   //static random_unit_vector rs;
 
   hittable_list world;
+load_objects:
   for (int i=0; i<MAX_OBJECTS; i++) {
+#pragma HLS PIPELINE II=2
     if (i < p.num_objects) {
       world.objects[i].set(objects[i]);
     } else {
@@ -382,9 +384,7 @@ void light(
         vec3 unit_direction = unit_vector(ri.r.direction());
         value_t t = value_t(0.5)*(unit_direction.y() + value_t(1.0));
         rc = (value_t(1.0)-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
-        rc[0] *= ri.attenuation[0];
-        rc[1] *= ri.attenuation[1];
-        rc[2] *= ri.attenuation[2];
+        rc = rc * ri.attenuation;
       }
 
       pix.p += rc;
