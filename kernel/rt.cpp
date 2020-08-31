@@ -94,38 +94,26 @@ void generate_pixel(
   line_stream_fb& y_i,
   pix_stream& pix_o
 ) {
-//  pixel_block line_buf[BUFFER_WIDTH / pixel_block_size];
-//#pragma HLS ARRAY_RESHAPE variable=line_buf cyclic factor=pixel_block_size dim=1
-
 scanlines:
   for (uint16_t y=0; y<p.render_h; y++) {
-#pragma HLS PIPELINE off
     uint16_t line = y;
     if (line >= BUFFER_HEIGHT) {
       line = y_i.Pop();
     }
 
-//    for (uint16_t x=0; x<p.render_w/pixel_block_size; x++) {
-//#pragma HLS PIPELINE
-//      line_buf[x] = image[(y * p.image_w + p.start_x) / pixel_block_size + x];
-//    }
-
 pixels:
-    for (uint16_t x=0; x<p.render_w; x++) {
-#pragma HLS PIPELINE
-      pixel_position pos {x, line};
-      pixel_info pix;
-//      pix.p[0] = line_buf[x/pixel_block_size][x%pixel_block_size].r * (1.0f - p.output_ratio);
-//      pix.p[1] = line_buf[x/pixel_block_size][x%pixel_block_size].g * (1.0f - p.output_ratio);
-//      pix.p[2] = line_buf[x/pixel_block_size][x%pixel_block_size].b * (1.0f - p.output_ratio);
-//      pix.p[0] = 0.0f;
-//      pix.p[1] = 0.0f;
-//      pix.p[2] = 0.0f;
-      pix.p[0] = image[(y * p.image_w + p.start_x) / pixel_block_size + x/pixel_block_size][x%pixel_block_size].r * (1.0f - p.output_ratio);
-      pix.p[1] = image[(y * p.image_w + p.start_x) / pixel_block_size + x/pixel_block_size][x%pixel_block_size].g * (1.0f - p.output_ratio);
-      pix.p[2] = image[(y * p.image_w + p.start_x) / pixel_block_size + x/pixel_block_size][x%pixel_block_size].b * (1.0f - p.output_ratio);
-      pix.sample_count = 0;
-      pix_o.Push({pos, pix});
+    for (uint16_t bx=0; bx<p.render_w/pixel_block_size; bx++) {
+#pragma HLS PIPELINE II=pixel_block_size
+      auto blk = image[(line * p.image_w + p.start_x) / pixel_block_size + bx];
+      for (int i=0; i<pixel_block_size; i++) {
+        pixel_position pos {uint16_t(bx*pixel_block_size+i), line};
+        pixel_info pix;
+        pix.p[0] = blk[i].r * (1.0f - p.output_ratio);
+        pix.p[1] = blk[i].g * (1.0f - p.output_ratio);
+        pix.p[2] = blk[i].b * (1.0f - p.output_ratio);
+        pix.sample_count = 0;
+        pix_o.Push({pos, pix});
+      }
     }
   }
 }
