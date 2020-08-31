@@ -430,8 +430,8 @@ void count_pixel(
   done_stream& done_i,
   line_stream& y_o
 ) {
-  const int latency = 4;
-  using y_shifter = shifter<uint16_t, latency+1>;
+  const int distance = 4;
+  using y_shifter = shifter<uint16_t, distance+1>;
 
   y_shifter ys;
 
@@ -445,8 +445,7 @@ clear_counter:
 
   while (true) {
 #pragma HLS PIPELINE
-#pragma HLS LATENCY max=latency
-#pragma HLS DEPENDENCE variable=pixel_count inter false
+#pragma HLS DEPENDENCE variable=pixel_count inter distance=distance
 
     y_shifter::item y;
 
@@ -458,7 +457,7 @@ clear_counter:
 
     if (y.valid) {
       int num = 1;
-      for (int i=0; i<latency; i++) {
+      for (int i=0; i<distance; i++) {
 #pragma HLS UNROLL
         auto tmp_y = ys.arr[i];
         if (tmp_y.valid && tmp_y.data == y.data) {
