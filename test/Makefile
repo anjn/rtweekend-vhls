@@ -20,6 +20,8 @@ csyn:
 		| sed -ru "s/^.*Final II.*\$$/\o033[1;34m\0\o033[0m/g" \
 		| sed -ru "s/^.*Burst read of variable length and bit width.*\$$/\o033[1;34m\0\o033[0m/g" \
 		| sed -ru "s/^.*Burst write of variable length and bit width.*\$$/\o033[1;34m\0\o033[0m/g" \
+		| sed -ru "s/^.* Burst read of length.*\$$/\o033[1;34m\0\o033[0m/g" \
+		| sed -ru "s/^.* Burst write of length.*\$$/\o033[1;34m\0\o033[0m/g" \
 		| sed -ru "s/^.*Inferring multiple bus burst.*\$$/\o033[1;34m\0\o033[0m/g"
 
 .PHONY: compile

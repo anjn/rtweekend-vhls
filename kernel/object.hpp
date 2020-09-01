@@ -1,6 +1,6 @@
 #pragma once
 
-#ifndef OPENCL
+#ifndef OPENCL_RUNTIME
 #include "vec3.hpp"
 #else
 struct vec3 {
@@ -67,14 +67,11 @@ struct object
 {
   vec3 center;
   float radius;
-
-  material m;
 };
 
-inline object make_sphere(vec3 center, float radius, material m) {
+inline object make_sphere(vec3 center, float radius) {
   object o;
   o.center = center;
   o.radius = radius;
-  o.m = m;
   return o;
 }

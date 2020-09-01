@@ -9,7 +9,7 @@
 
 int main(int argc, char** argv)
 {
-  const int samples_per_pixel = 8*4;
+  const int samples_per_pixel = 8;
   const int image_width = 480/2;
   const int image_height = 270/2;
 
@@ -23,13 +23,27 @@ int main(int argc, char** argv)
   }
 
   std::vector<object> objects;
-  objects.push_back(make_sphere({ 0,      0, -1}, 0.5, make_lambertian({0.8, 0.3, 0.3})));
-  objects.push_back(make_sphere({ 0, -100.5, -1}, 100, make_lambertian({0.8, 0.8, 0.3})));
-  objects.push_back(make_sphere({-1,      0, -1}, 0.4, make_metal({0.8, 0.8, 0.8}, 0.0)));
-  //objects.push_back(make_sphere({ 1,      0, -1}, 0.4, make_dielectric(1.5)));
+  std::vector<material> materials;
+  objects.push_back(make_sphere({ 0,      0, -1}, 0.5)); materials.push_back(make_lambertian({0.8, 0.3, 0.3}));
+  objects.push_back(make_sphere({ 0, -100.5, -1}, 100)); materials.push_back(make_lambertian({0.8, 0.8, 0.3}));
+  objects.push_back(make_sphere({-1,      0, -1}, 0.4)); materials.push_back(make_metal({0.8, 0.8, 0.8}, 0.0));
 
-  rt(image_width, image_height, 0, 0, image_width, image_height, samples_per_pixel, 1.0f, objects.size(), objects.data(), image_ptr);
-  //rt(image_width, image_height, 0, 0, image_width, image_height, samples_per_pixel, 0.5f, image_ptr);
+  render_info p;
+  p.image_w = image_width;
+  p.image_h = image_height;
+  p.start_x = 0;
+  p.start_y = 0;
+  p.end_x = image_width;
+  p.end_y = image_height;
+  p.samples_per_pixel = samples_per_pixel;
+  p.output_ratio = 1.0f;
+  p.num_objects = objects.size();
+
+  p.pre_calculation();
+
+  auto p_arr = to_array<uint32_t>(p);
+
+  rt(p_arr.data(), objects.data(), materials.data(), image_ptr);
 
   // Output in ppm format
   std::ofstream ofs("../../../../out.ppm");

@@ -2,6 +2,7 @@
 #include <array>
 #include <stdint.h>
 
+#include "render_info.hpp"
 #include "object.hpp"
 
 template<typename T>
@@ -18,16 +19,9 @@ using pixel_type = float;
 using pixel_block = std::array<pixel<pixel_type>, pixel_block_size>;
 
 void rt(
-  const int image_w,
-  const int image_h,
-  const int start_x,
-  const int start_y,
-  const int end_x,
-  const int end_y,
-  const int samples_per_pixel,
-  const float output_ratio,
-  const int num_objects,
+  uint32_t* render,
   object* objects,
+  material* materials,
   pixel_block* image
 );
 
