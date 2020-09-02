@@ -21,6 +21,8 @@ constexpr int BUFFER_WIDTH_CLOG2 = hlslib::ConstLog2(BUFFER_WIDTH-1);
 constexpr int BUFFER_HEIGHT = 16;
 constexpr int BUFFER_SIZE = BUFFER_WIDTH * BUFFER_HEIGHT;
 
+constexpr int NUM_DONE_STREAM = 9;
+
 struct ray_info
 {
   ray r;
@@ -60,9 +62,11 @@ struct pixel_info
 using pix_stream            = hlslib::Stream<std::tuple<pixel_position, pixel_info>, 8>;
 using pix_stream_fb         = hlslib::Stream<std::tuple<pixel_position, pixel_info>, 1024>;
 using pix_ray_stream        = hlslib::Stream<std::tuple<pixel_position, pixel_info, ray_info>, 8>;
+using pix_ray_stream_fb     = hlslib::Stream<std::tuple<pixel_position, pixel_info, ray_info>, 512>;
 using pix_ray_hit_stream    = hlslib::Stream<std::tuple<pixel_position, pixel_info, ray_info, hit_info>, 8>;
 using pix_ray_hit_stream_fb = hlslib::Stream<std::tuple<pixel_position, pixel_info, ray_info, hit_info>, 512>;
-using ray_hit_stream        = hlslib::Stream<std::tuple<ray_info, hit_info>, 8>;
+using ray_hit_stream        = hlslib::Stream<std::tuple<ray, hit_info>, 8>;
+using hit_stream            = hlslib::Stream<hit_info, 8>;
 using pix_blk_stream        = hlslib::Stream<pixel_block, 128>;
 using line_stream           = hlslib::Stream<uint16_t, 8>;
 using line_stream_fb        = hlslib::Stream<uint16_t, BUFFER_HEIGHT>;
@@ -180,7 +184,7 @@ void merge_hit(
   pix_ray_hit_stream_fb& ray_loop_i,
   done_stream& done_i,
   ray_hit_stream& ray_o,
-  pix_ray_hit_stream_fb& pix_o
+  pix_ray_stream_fb& pix_o
 ) {
   while (true)
   {
@@ -212,8 +216,8 @@ void merge_hit(
     }
 
     if (input_valid) {
-      ray_o.Push({ri, hi});
-      pix_o.Push({pos, pix, ri, hi});
+      ray_o.Push({ri.r, hi});
+      pix_o.Push({pos, pix, ri});
     }
   }
 }
@@ -221,9 +225,55 @@ void merge_hit(
 void hit_sphere(
   const uint16_t num_objects,
   object* objects,
-  material* materials,
   ray_hit_stream& ray_i,
-  pix_ray_hit_stream_fb& pix_i,
+  done_stream& done_i,
+  hit_stream& hit_o
+) {
+  object obj[MAX_OBJECTS];
+//#pragma HLS ARRAY_PARTITION variable=obj complete
+
+load_objects:
+  for (int i=0; i<num_objects; i++) {
+#pragma HLS PIPELINE II=1
+    obj[i] = objects[i];
+  }
+
+hit_main:
+  while (true)
+  {
+    decltype(ray_i.Pop()) d;
+    if (ray_i.ReadNonBlocking(d)) {
+      auto [r, hi] = d;
+      hit_record rec;
+      bool hit_anything = hit(obj[hi.object_index], r, 0.001, hi.closest_so_far, rec);
+
+      hit_info nh;
+      if (hit_anything) {
+        nh.hit_anything = true;
+        nh.hit_obj_index = hi.object_index;
+        nh.closest_so_far = rec.t;
+        nh.rec = rec;
+      } else {
+        nh = hi;
+      }
+
+      nh.object_index = hi.object_index + 1;
+
+      hit_o.Push(nh);
+    }
+
+    bool done;
+    if (done_i.ReadNonBlocking(done)) {
+      break;
+    }
+  }
+}
+
+void scatter_ray(
+  const uint16_t num_objects,
+  material* materials,
+  hit_stream& hit_i,
+  pix_ray_stream_fb& pix_i,
   done_stream& done_i,
   pix_ray_stream& ray_o,
   pix_ray_hit_stream_fb& ray_loop_o
@@ -231,46 +281,26 @@ void hit_sphere(
   static random_in_unit_sphere rs;
   //static random_unit_vector rs;
 
-  object obj[MAX_OBJECTS];
   material mat[MAX_OBJECTS];
-#pragma HLS ARRAY_PARTITION variable=obj complete
-#pragma HLS ARRAY_PARTITION variable=mat complete
+//#pragma HLS ARRAY_PARTITION variable=mat complete
 
-load_objects:
+load_materials:
   for (int i=0; i<num_objects; i++) {
 #pragma HLS PIPELINE II=2
-    obj[i] = objects[i];
     mat[i] = materials[i];
   }
 
-hit_sphere_main:
+scatter_main:
   while (true)
   {
-    bool done;
-
-    if (done_i.ReadNonBlocking(done)) {
-      break;
-    } else if (!ray_i.IsEmpty()) {
-      bool hit_anything;
-      hit_record rec;
-      {
-        auto [ri, hi] = ray_i.Pop();
-        hit_anything = hit(obj[hi.object_index], ri.r, 0.001, hi.closest_so_far, rec);
-      }
-
-      auto [pos, pix, ri, hi] = pix_i.Pop();
-
-      if (hit_anything) {
-        hi.hit_anything = true;
-        hi.closest_so_far = rec.t;
-        hi.rec = rec;
-        hi.hit_obj_index = hi.object_index;
-      }
+    if (!hit_i.IsEmpty()) {
+      auto hi = hit_i.Pop();
+      auto [pos, pix, ri] = pix_i.Pop();
 
       auto rs_v = rs.next();
       bool loop = true;
 
-      if (hi.object_index == num_objects - 1) {
+      if (hi.object_index == num_objects) {
         loop = false;
 
         if (hi.hit_anything) {
@@ -319,8 +349,6 @@ hit_sphere_main:
           // Reset hit_info
           init(hi);
         }
-      } else {
-        hi.object_index++;
       }
 
       if (loop) {
@@ -328,6 +356,11 @@ hit_sphere_main:
       } else {
         ray_o.Push({pos, pix, ri});
       }
+    }
+
+    bool done;
+    if (done_i.ReadNonBlocking(done)) {
+      break;
     }
   }
 }
@@ -563,7 +596,7 @@ void write_mem(
     }
   }
 
-  for (int i=0; i<8; i++) {
+  for (int i=0; i<NUM_DONE_STREAM; i++) {
 #pragma HLS UNROLL
     done_o[i].Push(true);
   }
@@ -599,7 +632,8 @@ void rt(
   INST_STREAM(pix_stream,            stage1_pix);
   INST_STREAM(pix_ray_stream,        stage2_ray);
   INST_STREAM(ray_hit_stream,        stage3_ray);
-  INST_STREAM(pix_ray_hit_stream_fb, stage3_pix);
+  INST_STREAM(pix_ray_stream_fb,     stage3_pix);
+  INST_STREAM(hit_stream,            stage4_hit);
   INST_STREAM(pix_ray_stream,        stage4_ray);
   INST_STREAM(pix_ray_hit_stream_fb, stage4_ray_loop);
   INST_STREAM(pix_stream,            stage5_pix);
@@ -612,7 +646,7 @@ void rt(
   INST_STREAM(line_stream,           stage9_line);
   INST_STREAM(line_stream_fb,        stage9_line_loop);
 
-  done_stream done[8];
+  done_stream done[NUM_DONE_STREAM];
 
   HLSLIB_DATAFLOW_INIT();
   // Stage 0
@@ -624,15 +658,16 @@ void rt(
   // Stage 3
   HLSLIB_DATAFLOW_FUNCTION(merge_hit, stage2_ray, stage4_ray_loop, done[2], stage3_ray, stage3_pix);
   // Stage 4
-  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p.num_objects, objects, materials, stage3_ray, stage3_pix, done[3], stage4_ray, stage4_ray_loop);
+  HLSLIB_DATAFLOW_FUNCTION(hit_sphere, p.num_objects, objects, stage3_ray, done[3], stage4_hit);
+  HLSLIB_DATAFLOW_FUNCTION(scatter_ray, p.num_objects, materials, stage4_hit, stage3_pix, done[4], stage4_ray, stage4_ray_loop);
   // Stage 5
-  HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, done[4], stage5_pix, stage5_pix_loop);
+  HLSLIB_DATAFLOW_FUNCTION(light, p, stage4_ray, done[5], stage5_pix, stage5_pix_loop);
   // Stage 6
-  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, stage5_pix, done[5], stage6_wr, stage6_line);
+  HLSLIB_DATAFLOW_FUNCTION(buffer_write, p, stage5_pix, done[6], stage6_wr, stage6_line);
   // Stage 7
-  HLSLIB_DATAFLOW_FUNCTION(count_pixel, p, stage6_line, done[6], stage7_line);
+  HLSLIB_DATAFLOW_FUNCTION(count_pixel, p, stage6_line, done[7], stage7_line);
   // Stage 8
-  HLSLIB_DATAFLOW_FUNCTION(buffer, stage6_wr, stage9_rd, done[7], stage8_blk);
+  HLSLIB_DATAFLOW_FUNCTION(buffer, stage6_wr, stage9_rd, done[8], stage8_blk);
   // Stage 9
   HLSLIB_DATAFLOW_FUNCTION(buffer_read, p, stage7_line, stage9_rd, stage9_line, stage9_line_loop);
   // Stage 10
